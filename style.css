@@ -105,6 +105,13 @@ body {
     margin-bottom: 2rem;
 }
 
+.hero-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* CTA Section */
 .cta {
     padding: 4rem 2rem;
