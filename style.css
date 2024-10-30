@@ -14,12 +14,13 @@
 
 body {
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* Header Styles */
 .header {
     background: white;
-    padding: 1rem 2rem;
+    padding: 1rem;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: fixed;
     width: 100%;
@@ -33,23 +34,25 @@ body {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
     color: var(--primary-red);
+    text-decoration: none;
 }
 
 .login-btn {
     background: var(--primary-red);
     color: white;
-    font-size: large;
-    padding: 1rem 3rem;
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
+    font-size: 0.9rem;
 }
 
 .login-btn:hover {
@@ -67,10 +70,11 @@ body {
     position: absolute;
     right: 0;
     background-color: white;
-    min-width: 160px;
+    min-width: 200px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     border-radius: 5px;
     overflow: hidden;
+    z-index: 1001;
 }
 
 .dropdown-content a {
@@ -79,6 +83,7 @@ body {
     text-decoration: none;
     display: block;
     transition: background 0.3s;
+    font-size: 0.9rem;
 }
 
 .dropdown-content a:hover {
@@ -87,34 +92,29 @@ body {
 
 /* Hero Section */
 .hero {
-    margin-top: 70px;
-    padding: 4rem 2rem;
+    margin-top: 60px;
+    padding: 3rem 1rem;
     text-align: center;
     background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('/api/placeholder/1200/800') center/cover;
 }
 
 .hero h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
     color: var(--primary-red);
     margin-bottom: 1rem;
+    padding: 0 1rem;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
     color: #666;
     margin-bottom: 2rem;
-}
-
-.hero-image {
-    max-width: 100%;
-    border-radius: 10px;
-    margin: 2rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 0 1rem;
 }
 
 /* CTA Section */
 .cta {
-    padding: 4rem 2rem;
+    padding: 3rem 1rem;
     text-align: center;
     background: var(--light-gray);
 }
@@ -122,12 +122,14 @@ body {
 .cta-button {
     background: var(--primary-red);
     color: white;
-    padding: 1rem 3rem;
-    font-size: 1.2rem;
+    padding: 0.875rem 2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .cta-button:hover {
@@ -135,32 +137,34 @@ body {
 }
 
 .stats {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
     margin-top: 3rem;
-    flex-wrap: wrap;
+    padding: 0 1rem;
 }
 
 .stat-item {
     text-align: center;
+    padding: 1rem;
 }
 
 .stat-number {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
     color: var(--primary-red);
     font-weight: bold;
 }
 
 .stat-label {
     color: #666;
+    font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
 /* Footer */
 .footer {
     background: #333;
     color: white;
-    padding: 3rem 2rem;
+    padding: 2rem 1rem;
 }
 
 .footer-content {
@@ -169,36 +173,33 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    padding: 0 1rem;
+}
+
+.footer-section {
+    text-align: left;
 }
 
 .footer-section h3 {
     margin-bottom: 1rem;
     color: var(--primary-red);
+    font-size: clamp(1.1rem, 3vw, 1.25rem);
 }
 
 .footer-section p {
     margin-bottom: 0.5rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
-.footer-credits {
-    text-align: center;
-    margin-top: 2rem;
-    color: #ccc;
-}
-
-.footer-credits a {
-    color: var(--primary-blue);
-    text-decoration: none;
-}
-
-.footer-credits a:hover {
-    text-decoration: underline;
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .social-links a {
     color: white;
-    margin-right: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     text-decoration: none;
 }
 
@@ -212,4 +213,89 @@ body {
     text-decoration: none;
     display: inline-block;
     margin-top: 1rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .nav {
+        padding: 0 1rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0.75rem;
+    }
+    
+    .hero {
+        margin-top: 55px;
+        padding: 2rem 1rem;
+    }
+
+    .dropdown-content {
+        width: 100vw;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1rem;
+    }
+
+    .login-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.875rem;
+    }
+
+    .hero {
+        padding: 1.5rem 1rem;
+    }
+
+    .cta-button {
+        padding: 0.75rem 1.5rem;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .stat-item {
+        padding: 0.5rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+    .login-btn:hover {
+        background: var(--primary-red);
+    }
+
+    .dropdown-content a:hover {
+        background-color: var(--light-gray);
+    }
 }
