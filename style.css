@@ -44,7 +44,8 @@ body {
 .login-btn {
     background: var(--primary-red);
     color: white;
-    padding: 0.5rem 1.5rem;
+    font-size: large;
+    padding: 1rem 3rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
