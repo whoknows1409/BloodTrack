@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodTrack - Recipient Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="recipient_login.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">BloodTrack</a>
+        </nav>
+    </header>
+
+    <!-- recipient Login Modal -->
+    <div class="modal fade" id="recipientModal" tabindex="-1" aria-labelledby="recipientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recipientModalLabel">Recipient Login / Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Tabs for Login and Register -->
+                    <ul class="nav nav-tabs" id="loginRegisterTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="loginRegisterTabContent">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <form id="loginForm" class="p-3">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email/Username</label>
+                                    <input type="text" class="form-control" id="loginEmail" required>
+                                    <div class="invalid-feedback">Email/Username is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" required>
+                                    <div class="invalid-feedback">Password is required.</div>
+                                    <small class="toggle-password" onclick="togglePassword('loginPassword')">Show</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                            <form id="registerForm" class="p-3">
+                                <div class="mb-3">
+                                    <label for="regFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="regFullName" required>
+                                    <div class="invalid-feedback">Full name is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regGender" class="form-label">Gender</label>
+                                    <select class="form-select" id="regGender" required>
+                                        <option value="">Select Gender</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">Gender is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regAge" class="form-label">Age</label>
+                                    <input type="number" class="form-control" id="regAge" min="18" required>
+                                    <div class="invalid-feedback">Must be at least 18 years old.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regBloodGroup" class="form-label">Blood Group</label>
+                                    <select class="form-select" id="regBloodGroup" required>
+                                        <option value="">Select Blood Group</option>
+                                        <option>A+</option>
+                                        <option>A-</option>
+                                        <option>B+</option>
+                                        <option>B-</option>
+                                        <option>AB+</option>
+                                        <option>AB-</option>
+                                        <option>O+</option>
+                                        <option>O-</option>
+                                    </select>
+                                    <div class="invalid-feedback">Blood group is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regAddress" class="form-label">Address</label>
+                                    <textarea class="form-control" id="regAddress" rows="2" required></textarea>
+                                    <div class="invalid-feedback">Address is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regContact" class="form-label">Contact Number</label>
+                                    <input type="text" class="form-control" id="regContact" required>
+                                    <div class="invalid-feedback">Enter a valid contact number.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="regEmail" required>
+                                    <div class="invalid-feedback">Enter a valid email.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="regPassword" required>
+                                    <div class="invalid-feedback">Password is required.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="regConfirmPassword" required>
+                                    <div class="invalid-feedback">Passwords must match.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="recipient_login.js"></script>
+    <script>
+        // Automatically show the recipient login modal on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = new bootstrap.Modal(document.getElementById('recipientModal'));
+            modal.show();
+        });
+    </script>
+</body>
+</html>

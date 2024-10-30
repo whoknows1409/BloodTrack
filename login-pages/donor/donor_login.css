@@ -1,0 +1,48 @@
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e23636;
+}
+
+.nav .login-btn {
+    background-color: #e23636;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.toggle-password {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 0.9rem;
+    float: right;
+    margin-top: -30px;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #e23636;
+    color: white;
+}
+
+.invalid-feedback {
+    display: block;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodTrack - Blood Bank Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">BloodTrack: A Streamlined BloodBank Management System</a>
+            <div class="dropdown">
+                <button class="login-btn" onclick="toggleDropdown()">Login</button>
+                <div class="dropdown-content" id="loginDropdown">
+                    <a href="/login-pages/donor/donor_login.html">Donor Login</a>
+                    <a href="/login-pages/recipient/recipient_login.html">Recipient Login</a>
+                    <a href="/login-pages/admin/admin_login.html">Admin Login</a>
+                    <a href="/login-pages/hospital/hospital_login.html">Hospital Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>A single drop of blood can make a huge difference</h1>
+        <p>Join our community of heroes and help save lives through blood donation</p>
+        <img src="/api/placeholder/800/400" alt="Blood donation in progress" style="max-width: 100%; border-radius: 10px; margin: 2rem 0;">
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <button class="cta-button">Save Lives Today</button>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">50,000+</div>
+                <div class="stat-label">Lives Saved</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Active Donors</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Available Units</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Emergency Contact</h3>
+                <p><i class="fas fa-phone"></i> +1 (800) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> emergency@bloodtrack.org</p>
+                <a href="#" class="emergency-btn">Request Emergency Blood</a>
+            </div>
+            <div class="footer-section">
+                <h3>Location & Hours</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Medical Center Drive</p>
+                <p>New York, NY 10001</p>
+                <p><i class="fas fa-clock"></i> Mon-Sun: 24/7</p>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
