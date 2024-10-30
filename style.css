@@ -173,6 +173,21 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.footer-credits {
+    text-align: center;
+    margin-top: 2rem;
+    color: #ccc;
+}
+
+.footer-credits a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.footer-credits a:hover {
+    text-decoration: underline;
+}
+
 .social-links a {
     color: white;
     margin-right: 1rem;
@@ -190,23 +205,4 @@ body {
     text-decoration: none;
     display: inline-block;
     margin-top: 1rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero {
-        padding: 2rem 1rem;
-    }
-
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .stats {
-        gap: 1.5rem;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
 }
