@@ -18,7 +18,7 @@ function validatePassword(password) {
 }
 
 // Real-time Password Feedback Display
-document.getElementById("regPassword").addEventListener("input", function() {
+document.getElementById("regPassword").addEventListener("input", function () {
     const isValid = validatePassword(this.value);
     const feedback = this.nextElementSibling;
     if (isValid) {
@@ -32,11 +32,11 @@ document.getElementById("regPassword").addEventListener("input", function() {
 });
 
 // Login Form Validation
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
     const email = document.getElementById("loginEmail");
     const password = document.getElementById("loginPassword");
-    
+
     // Email and password validations
     const isEmailValid = /\S+@\S+\.\S+/.test(email.value);
     if (!isEmailValid) email.classList.add("is-invalid");
@@ -53,7 +53,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
 });
 
 // Registration Form Validation
-document.getElementById("registerForm").addEventListener("submit", function(event) {
+document.getElementById("registerForm").addEventListener("submit", function (event) {
     event.preventDefault();
     let valid = true;
 
@@ -108,5 +108,8 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         confirmPassword.classList.remove("is-invalid");
     }
 
-    if (valid) alert("Registration successful!");
+    if (valid) {
+        alert("Registration successful!");
+        window.location.href = "recipient_dash.html";
+    }
 });

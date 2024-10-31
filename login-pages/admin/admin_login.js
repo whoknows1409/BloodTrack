@@ -46,6 +46,6 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 
     if (valid) {
         alert("Logged in successfully!");
-        window.location.href = "admin_dash.html"
+        window.location.href="admin_dash.html"
     }
 });
