@@ -10,42 +10,41 @@ function togglePassword(id) {
     input.type = input.type === 'password' ? 'text' : 'password';
 }
 
-// Password validation function
-function validatePassword(password) {
-    const minLength = 8;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    return password.length >= minLength && hasUppercase && hasNumber && hasSpecialChar;
-}
-
-// Login Form Validation
+// Login Form Submission with Backend Check
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
-    const email = document.getElementById("adminEmail");
-    const password = document.getElementById("loginPassword");
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-    // Check if email and password are valid
-    let valid = true;
-
-    const isEmailValid = /\S+@\S+\.\S+/.test(email.value);
+    // Validate email format
+    const isEmailValid = /\S+@\S+\.\S+/.test(email);
     if (!isEmailValid) {
-        email.classList.add("is-invalid");
-        valid = false;
-    } else {
-        email.classList.remove("is-invalid");
+        alert("Please enter a valid email.");
+        return;
     }
 
-    const isPasswordValid = validatePassword(password.value);
-    if (!isPasswordValid) {
-        password.classList.add("is-invalid");
-        valid = false;
-    } else {
-        password.classList.remove("is-invalid");
-    }
-
-    if (valid) {
-        alert("Logged in successfully!");
-        window.location.href="admin_dash.html"
-    }
+    // Send login request to backend
+    fetch('http://localhost:3000/auth/login', { // Adjusted the endpoint
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => {
+        // Log the entire response for debugging
+        console.log('Response:', response);
+        return response.text(); // Get the response as text
+    })
+    .then(data => {
+        console.log('Response Data:', data); // Log the raw response data
+        if (data === "Login successful") { // Check for direct response string
+            alert("Logged in successfully!");
+            window.location.href = "admin_dash.html";
+        } else {
+            alert("Invalid email or password. Please try again.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Invalid email or password. Please try again.");
+    });
 });

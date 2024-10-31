@@ -46,70 +46,86 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     else password.classList.remove("is-invalid");
 
     if (isEmailValid && password.value) {
-        alert("Logged in successfully!");
-        // Redirect to recipient dashboard
-        window.location.href = "recipient_dash.html";
+        // Send login request to server
+        fetch('http://localhost:3000/auth/recipient/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Login failed. Please check your credentials.');
+            return response.text();
+        })
+        .then(data => {
+            alert(data);
+            window.location.href = "recipient_dash.html";  // Redirect to recipient dashboard
+        })
+        .catch(error => {
+            alert(error.message);
+        });
     }
 });
 
 // Registration Form Validation
 document.getElementById("registerForm").addEventListener("submit", function (event) {
     event.preventDefault();
-    let valid = true;
-
-    document.querySelectorAll("#registerForm .form-control").forEach(input => {
-        if (!input.value) {
-            input.classList.add("is-invalid");
-            valid = false;
-        } else {
-            input.classList.remove("is-invalid");
-        }
-    });
-
-    const age = document.getElementById("regAge");
-    if (age.value < 18) {
-        age.classList.add("is-invalid");
-        valid = false;
-    } else {
-        age.classList.remove("is-invalid");
-    }
-
-    const contactNumber = document.getElementById("regContact");
-    if (!/^\d{10}$/.test(contactNumber.value)) {
-        contactNumber.classList.add("is-invalid");
-        valid = false;
-    } else {
-        contactNumber.classList.remove("is-invalid");
-    }
-
     const email = document.getElementById("regEmail");
-    const isEmailValid = /\S+@\S+\.\S+/.test(email.value);
-    if (!isEmailValid) {
-        email.classList.add("is-invalid");
-        valid = false;
-    } else {
-        email.classList.remove("is-invalid");
-    }
-
     const password = document.getElementById("regPassword");
     const confirmPassword = document.getElementById("regConfirmPassword");
-    const isPasswordValid = validatePassword(password.value);
-    if (!isPasswordValid) {
-        password.classList.add("is-invalid");
-        valid = false;
-    } else {
-        password.classList.remove("is-invalid");
+    const full_name = document.getElementById("regFullName");
+    const gender = document.getElementById("regGender");
+    const age = document.getElementById("regAge");
+    const blood_group = document.getElementById("regBloodGroup");
+    const address = document.getElementById("regAddress");
+    const contactNumber = document.getElementById("regContact");
+
+    // Validate all fields
+    const isFormValid = [
+        email.value, password.value, confirmPassword.value, full_name.value, 
+        gender.value, age.value, blood_group.value, address.value, contactNumber.value
+    ].every(field => field);
+
+    if (!isFormValid) {
+        alert("Please fill out all fields.");
+        return;
     }
 
     if (password.value !== confirmPassword.value) {
-        confirmPassword.classList.add("is-invalid");
-        valid = false;
-    } else {
-        confirmPassword.classList.remove("is-invalid");
+        alert("Passwords do not match.");
+        return;
     }
 
-    if (valid) {
-        alert("Registration successful!");
-        window.location.href = "recipient_dash.html";
-    }
+    // Send registration request to server
+    fetch('http://localhost:3000/auth/recipient/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email.value,
+            password: password.value,
+            full_name: full_name.value,
+            gender: gender.value,
+            age: age.value,
+            blood_group: blood_group.value,
+            address: address.value,
+            contact_number: contactNumber.value,
+        }),
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Registration failed. Please try again.');
+        return response.text();
+    })
+    .then(data => {
+        alert(data);  // Display success message
+        window.location.href = "recipient_dash.html";  // Redirect to recipient dashboard
+    })
+    .catch(error => {
+        alert(error.message);  // Display error message
+    });
 });
