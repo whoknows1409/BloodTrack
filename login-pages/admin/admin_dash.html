@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodTrack Admin Dashboard</title>
+  <link rel="stylesheet" href="admin_dash.css">
+  <script defer src="admin_dash.js"></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="nav">
+      <h1>BloodTrack Blood Bank - Admin</h1>
+      <ul>
+        <li>Home</li>
+        <li>About Us</li>
+        <li>Services</li>
+        <li>Contact</li>
+        <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+    <p class="welcome-message">Welcome, Admin!</p>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-grid">
+      <!-- Blood Stock Overview Card -->
+      <div class="card blood-stock">
+        <h2>Blood Stock Overview</h2>
+        <p>Total Units Available: <span class="total-units">100</span></p>
+        <ul>
+          <li>A+: <span>15 units</span></li>
+          <li>A-: <span>10 units</span></li>
+          <li>B+: <span>12 units</span></li>
+          <li>B-: <span>8 units</span></li>
+          <li>AB+: <span>20 units</span></li>
+          <li>AB-: <span>5 units</span></li>
+          <li>O+: <span>20 units</span></li>
+          <li>O-: <span>10 units</span></li>
+        </ul>
+      </div>
+
+      <!-- Donor and Recipient Overview -->
+      <div class="card donor-recipient-info">
+        <h2>Donor & Recipient Info</h2>
+        <p>Number of Donors: <span class="donor-count">50</span></p>
+        <p>Number of Recipients: <span class="recipient-count">40</span></p>
+        <p>Requests: <span class="request-count">120</span></p>
+        <p>Approved Requests: <span class="approved-request-count">100</span></p>
+      </div>
+    </div>
+
+    <!-- Admin Actions Section -->
+    <div class="admin-actions">
+      <h2>Manage Donors and Recipients</h2>
+      <button onclick="viewDonors()">View Donors</button>
+      <button onclick="viewRecipients()">View Recipients</button>
+    </div>
+
+    <!-- Tabs for Request Management -->
+    <div class="tab-section">
+      <button onclick="openTab('donationRequests')" class="tab-btn active">Donation Requests</button>
+      <button onclick="openTab('bloodRequests')" class="tab-btn">Blood Requests</button>
+      <button onclick="openTab('requestHistory')" class="tab-btn">Request History</button>
+    </div>
+
+    <!-- Donation Requests Tab Content -->
+    <div id="donationRequests" class="tab-content">
+      <table>
+        <tr>
+          <th>Donor Name</th>
+          <th>Blood Type</th>
+          <th>Units</th>
+          <th>Disease</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        <!-- Sample Data Row -->
+        <tr>
+          <td>John Doe</td>
+          <td>A+</td>
+          <td>1</td>
+          <td>None</td>
+          <td class="status pending">Pending</td>
+          <td>
+            <button onclick="approveDonationRequest(this)">Approve</button>
+            <button onclick="rejectDonationRequest(this)">Reject</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Blood Requests Tab Content -->
+    <div id="bloodRequests" class="tab-content" style="display:none;">
+      <table>
+        <tr>
+          <th>Recipient Name</th>
+          <th>Blood Type & Units</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        <!-- Sample Data Row -->
+        <tr>
+          <td>Jane Doe</td>
+          <td>O+ (2 units)</td>
+          <td>Emergency Surgery</td>
+          <td class="status pending">Pending</td>
+          <td>
+            <button onclick="approveBloodRequest(this)">Approve</button>
+            <button onclick="rejectBloodRequest(this)">Reject</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Request History Tab Content -->
+    <div id="requestHistory" class="tab-content" style="display:none;">
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Blood Group</th>
+          <th>Units</th>
+          <th>Status</th>
+          <th>Admin Comments</th>
+        </tr>
+        <!-- Sample Data Row -->
+        <tr>
+          <td>2024-10-10</td>
+          <td>Donation</td>
+          <td>B-</td>
+          <td>1</td>
+          <td class="status approved">Approved</td>
+          <td>Request approved successfully</td>
+        </tr>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modals for Update/Approval/Rejection Actions -->
+  <div id="updateModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeUpdateModal()">×</span>
+      <h2>Update Blood Stock</h2>
+      <form>
+        <label>Blood Type:</label>
+        <select required>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+        <label>Update Units:</label>
+        <input type="number" min="1" required>
+        <button type="submit">Update Stock</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

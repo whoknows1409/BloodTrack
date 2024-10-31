@@ -49,6 +49,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
 
     if (isEmailValid && password.value) {
         // Redirect to dashboard on successful login
+        alert("Logged in successfully!");
         window.location.href = "donor-dash.html";
     }
 });
