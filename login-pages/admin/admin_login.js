@@ -1,5 +1,5 @@
 // Show the login modal on load
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const modal = new bootstrap.Modal(document.getElementById('adminModal'));
     modal.show();
 });
@@ -20,7 +20,7 @@ function validatePassword(password) {
 }
 
 // Login Form Validation
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
     const email = document.getElementById("adminEmail");
     const password = document.getElementById("loginPassword");
@@ -44,5 +44,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         password.classList.remove("is-invalid");
     }
 
-    if (valid) alert("Logged in successfully!");
+    if (valid) {
+        alert("Logged in successfully!");
+        window.location.href = "admin_dash.html"
+    }
 });
