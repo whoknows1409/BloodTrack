@@ -68,8 +68,9 @@ body {
 }
 
 .admin-actions button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     background-color: #e23636;
+    font-size: 1em;
     color: white;
     border: none;
     border-radius: 4px;
@@ -83,12 +84,16 @@ body {
 }
 
 .tab-btn {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    background-color: #e23636;
-    color: white;
-    border-radius: 4px;
+    padding: 10px 20px; /* Increase padding for larger button size */
+  font-size: 1.1em; /* Increase font size */
+  width: 100%; /* Make buttons full width */
+  max-width: 200px; /* Optional: limit width for larger screens */
+  margin: 10px 0; /* Add space between buttons */
+  background-color: #e23636;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .tab-content table {

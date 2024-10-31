@@ -73,66 +73,81 @@
         <tr>
           <th>Donation Date</th>
           <th>Blood Type</th>
+          <th>Location</th> <!-- New column for location -->
           <th>Status</th>
           <th>Admin Response Date</th>
           <th>Comments</th>
         </tr>
-        <!-- Sample data row -->
         <tr>
           <td>2024-10-01</td>
           <td>A+</td>
+          <td>City Hospital</td> <!-- Sample location data -->
           <td class="status approved">Approved</td>
           <td>2024-10-02</td>
           <td>Keep up the good work!</td>
         </tr>
       </table>
     </div>
+    
     <div id="requestHistory" class="tab-content" style="display:none;">
       <table>
         <tr>
           <th>Request Date</th>
           <th>Blood Type & Units</th>
           <th>Purpose</th>
+          <th>Location</th> <!-- New column for location -->
           <th>Status</th>
           <th>Response Date</th>
           <th>Comments</th>
         </tr>
-        <!-- Sample data row -->
         <tr>
           <td>2024-10-10</td>
           <td>B- (2 units)</td>
           <td>Emergency Surgery</td>
+          <td>City Hospital</td> <!-- Sample location data -->
           <td class="status pending">Pending</td>
           <td>-</td>
           <td>Admin approval pending</td>
         </tr>
       </table>
     </div>
+    
   </main>
 
-  <!-- Donation Form -->
-  <div id="donationForm" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeForm()">×</span>
-      <h2>Donate Blood</h2>
-      <form>
+<!-- Donation Form -->
+<div id="donationForm" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeForm()">×</span>
+    <h2>Donate Blood</h2>
+    <form class="form-layout">
+      <div class="form-group">
         <label>Last Donation Date:</label>
         <input type="date" required>
+      </div>
+      <div class="form-group">
         <label>Current Health Status:</label>
         <input type="text" required>
+      </div>
+      <div class="form-group">
         <label>Recent Medications:</label>
         <input type="text">
-        <button type="submit">Submit for Approval</button>
-      </form>
-    </div>
+      </div>
+      <div class="form-group">
+        <label>Location:</label>
+        <input type="text" placeholder="City or hospital name" required>
+      </div>
+      <button type="submit">Submit for Approval</button>
+    </form>
   </div>
+</div>
 
-  <!-- Request Form -->
-  <div id="requestForm" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeForm()">×</span>
-      <h2>Request Blood</h2>
-      <form>
+<!-- Request Form -->
+<div id="requestForm" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeForm()">×</span>
+    <h2>Request Blood</h2>
+    <form class="form-layout">
+      <div class="form-group">
         <label>Required Blood Type:</label>
         <select required>
           <option value="">Select</option>
@@ -145,17 +160,31 @@
           <option>O+</option>
           <option>O-</option>
         </select>
+      </div>
+      <div class="form-group">
         <label>Units Needed:</label>
         <input type="number" min="1" required>
+      </div>
+      <div class="form-group">
         <label>Purpose/Emergency Level:</label>
         <input type="text" required>
+      </div>
+      <div class="form-group">
         <label>Required Date:</label>
         <input type="date" required>
+      </div>
+      <div class="form-group">
+        <label>Location:</label>
+        <input type="text" placeholder="City or hospital name" required>
+      </div>
+      <div class="form-group">
         <label>Supporting Documents:</label>
         <input type="file">
-        <button type="submit">Submit Request</button>
-      </form>
-    </div>
+      </div>
+      <button type="submit">Submit Request</button>
+    </form>
   </div>
+</div>
+
 </body>
 </html>

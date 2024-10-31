@@ -77,13 +77,14 @@
   </main>
 
   <!-- Request Form Modal -->
-  <div id="requestForm" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeRequestForm()">×</span>
-      <h2>Request Blood</h2>
-      <form id="requestFormContent">
-        <label>Required Blood Type:</label>
-        <select required>
+<div id="requestForm" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeRequestForm()">×</span>
+    <h2>Request Blood</h2>
+    <form id="requestFormContent" class="form-layout">
+      <div class="form-group">
+        <label for="bloodType">Required Blood Type:</label>
+        <select id="bloodType" required>
           <option value="">Select</option>
           <option>A+</option>
           <option>A-</option>
@@ -94,15 +95,23 @@
           <option>O+</option>
           <option>O-</option>
         </select>
-        <label>Units Needed:</label>
-        <input type="number" min="1" required>
-        <label>Purpose/Emergency Level:</label>
-        <input type="text" required>
-        <label>Required Date:</label>
-        <input type="date" required>
-        <button type="submit">Submit Request</button>
-      </form>
-    </div>
+      </div>
+      <div class="form-group">
+        <label for="unitsNeeded">Units Needed:</label>
+        <input id="unitsNeeded" type="number" min="1" required>
+      </div>
+      <div class="form-group">
+        <label for="purpose">Purpose/Emergency Level:</label>
+        <input id="purpose" type="text" required>
+      </div>
+      <div class="form-group">
+        <label for="requiredDate">Required Date:</label>
+        <input id="requiredDate" type="date" required>
+      </div>
+      <button type="submit">Submit Request</button>
+    </form>
   </div>
+</div>
+
 </body>
 </html>
