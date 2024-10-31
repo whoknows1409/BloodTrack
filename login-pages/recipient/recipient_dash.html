@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodTrack Recipient Dashboard</title>
+  <link rel="stylesheet" href="recipient_dash.css">
+  <script defer src="recipient_dash.js"></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="nav">
+      <h1>BloodTrack Blood Bank</h1>
+      <ul>
+        <li>Home</li>
+        <li>About Us</li>
+        <li>Services</li>
+        <li>Contact</li>
+        <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+    <p class="welcome-message">Welcome, Recipient Name!</p>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-grid">
+      <!-- Total Requests Card -->
+      <div class="card total-requests">
+        <h2>Total Requests</h2>
+        <p class="number">20</p>
+        <div class="status-breakdown">
+          <p>Approved: 12</p>
+          <p>Pending: 5</p>
+          <p>Rejected: 3</p>
+        </div>
+      </div>
+
+      <!-- Request Blood Card -->
+      <div class="card request-blood">
+        <h2>Request Blood</h2>
+        <button onclick="openRequestForm()">Request Blood</button>
+      </div>
+
+      <!-- Status Summary Card -->
+      <div class="card status-summary">
+        <h2>Status Summary</h2>
+        <p>Requests Made: 20</p>
+        <p>Approved: 12</p>
+        <p>Pending: 5</p>
+        <p>Rejected: 3</p>
+      </div>
+    </div>
+
+    <!-- Request History Tab -->
+    <div class="tab-section">
+      <button onclick="openTab('requestHistory')" class="tab-btn active">Request History</button>
+    </div>
+    <div id="requestHistory" class="tab-content">
+      <table>
+        <tr>
+          <th>Request Date</th>
+          <th>Blood Type & Units</th>
+          <th>Status</th>
+          <th>Response Date</th>
+          <th>Comments</th>
+        </tr>
+        <!-- Sample data row -->
+        <tr>
+          <td>2024-10-10</td>
+          <td>B- (2 units)</td>
+          <td class="status approved">Approved</td>
+          <td>2024-10-12</td>
+          <td>Request approved by admin</td>
+        </tr>
+      </table>
+    </div>
+  </main>
+
+  <!-- Request Form Modal -->
+  <div id="requestForm" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeRequestForm()">×</span>
+      <h2>Request Blood</h2>
+      <form id="requestFormContent">
+        <label>Required Blood Type:</label>
+        <select required>
+          <option value="">Select</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+        <label>Units Needed:</label>
+        <input type="number" min="1" required>
+        <label>Purpose/Emergency Level:</label>
+        <input type="text" required>
+        <label>Required Date:</label>
+        <input type="date" required>
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

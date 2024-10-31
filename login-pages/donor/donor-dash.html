@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodTrack Donor Dashboard</title>
+  <link rel="stylesheet" href="donor-dash.css">
+  <script defer src="donor-dash.js"></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="nav">
+      <h1>BloodTrack Blood Bank</h1>
+      <ul>
+        <li>Home</li>
+        <li>About Us</li>
+        <li>Services</li>
+        <li>Contact</li>
+        <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+    <p class="welcome-message">Welcome, Donor Name!</p>
+  </header>
+
+  <main class="dashboard-main">
+    <div class="dashboard-grid">
+      <!-- Total Donations Card -->
+      <div class="card total-donations">
+        <h2>Total Donations</h2>
+        <p class="number">10</p>
+        <div class="status-breakdown">
+          <p>Approved: 8</p>
+          <p>Pending: 1</p>
+          <p>Rejected: 1</p>
+        </div>
+      </div>
+
+      <!-- Total Requests Card -->
+      <div class="card total-requests">
+        <h2>Total Requests</h2>
+        <p class="number">15</p>
+        <div class="status-breakdown">
+          <p>Approved: 10</p>
+          <p>Pending: 3</p>
+          <p>Rejected: 2</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions Card -->
+      <div class="card quick-actions">
+        <h2>Quick Actions</h2>
+        <button onclick="openForm('donation')">Donate Blood</button>
+        <button onclick="openForm('request')">Request Blood</button>
+      </div>
+
+      <!-- Status Summary Card -->
+      <div class="card status-summary">
+        <h2>Status Summary</h2>
+        <p>Requests Made: 15</p>
+        <p>Approved: 10</p>
+        <p>Pending: 3</p>
+        <p>Rejected: 2</p>
+      </div>
+    </div>
+
+    <!-- Tabs for Donation and Request History -->
+    <div class="tab-section">
+      <button onclick="openTab('donationHistory')" class="tab-btn active">Donation History</button>
+      <button onclick="openTab('requestHistory')" class="tab-btn">Request History</button>
+    </div>
+    <div id="donationHistory" class="tab-content">
+      <table>
+        <tr>
+          <th>Donation Date</th>
+          <th>Blood Type</th>
+          <th>Status</th>
+          <th>Admin Response Date</th>
+          <th>Comments</th>
+        </tr>
+        <!-- Sample data row -->
+        <tr>
+          <td>2024-10-01</td>
+          <td>A+</td>
+          <td class="status approved">Approved</td>
+          <td>2024-10-02</td>
+          <td>Keep up the good work!</td>
+        </tr>
+      </table>
+    </div>
+    <div id="requestHistory" class="tab-content" style="display:none;">
+      <table>
+        <tr>
+          <th>Request Date</th>
+          <th>Blood Type & Units</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Response Date</th>
+          <th>Comments</th>
+        </tr>
+        <!-- Sample data row -->
+        <tr>
+          <td>2024-10-10</td>
+          <td>B- (2 units)</td>
+          <td>Emergency Surgery</td>
+          <td class="status pending">Pending</td>
+          <td>-</td>
+          <td>Admin approval pending</td>
+        </tr>
+      </table>
+    </div>
+  </main>
+
+  <!-- Donation Form -->
+  <div id="donationForm" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeForm()">×</span>
+      <h2>Donate Blood</h2>
+      <form>
+        <label>Last Donation Date:</label>
+        <input type="date" required>
+        <label>Current Health Status:</label>
+        <input type="text" required>
+        <label>Recent Medications:</label>
+        <input type="text">
+        <button type="submit">Submit for Approval</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Request Form -->
+  <div id="requestForm" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeForm()">×</span>
+      <h2>Request Blood</h2>
+      <form>
+        <label>Required Blood Type:</label>
+        <select required>
+          <option value="">Select</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+        <label>Units Needed:</label>
+        <input type="number" min="1" required>
+        <label>Purpose/Emergency Level:</label>
+        <input type="text" required>
+        <label>Required Date:</label>
+        <input type="date" required>
+        <label>Supporting Documents:</label>
+        <input type="file">
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

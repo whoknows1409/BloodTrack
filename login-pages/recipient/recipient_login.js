@@ -45,7 +45,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     if (!password.value) password.classList.add("is-invalid");
     else password.classList.remove("is-invalid");
 
-    if (isEmailValid && password.value) alert("Logged in successfully!");
+    if (isEmailValid && password.value) {
+        alert("Logged in successfully!");
+        // Redirect to recipient dashboard
+        window.location.href = "recipient_dash.html";
+    }
 });
 
 // Registration Form Validation

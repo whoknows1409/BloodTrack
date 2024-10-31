@@ -1,8 +1,10 @@
+// Function to show the login modal
 function showLogin() {
     const modal = new bootstrap.Modal(document.getElementById('donorModal'));
     modal.show();
 }
 
+// Toggle password visibility
 function togglePassword(id) {
     const input = document.getElementById(id);
     input.type = input.type === 'password' ? 'text' : 'password';
@@ -17,7 +19,7 @@ function validatePassword(password) {
     return password.length >= minLength && hasUppercase && hasNumber && hasSpecialChar;
 }
 
-// Real-time Password Feedback Display
+// Real-time Password Feedback Display for Registration
 document.getElementById("regPassword").addEventListener("input", function() {
     const isValid = validatePassword(this.value);
     const feedback = this.nextElementSibling;
@@ -31,7 +33,7 @@ document.getElementById("regPassword").addEventListener("input", function() {
     }
 });
 
-// Login Form Validation
+// Login Form Validation and Redirection
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
     const email = document.getElementById("loginEmail");
@@ -45,14 +47,28 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     if (!password.value) password.classList.add("is-invalid");
     else password.classList.remove("is-invalid");
 
-    if (isEmailValid && password.value) alert("Logged in successfully!");
+    if (isEmailValid && password.value) {
+        // Redirect to dashboard on successful login
+        window.location.href = "donor-dash.html";
+    }
 });
 
-// Registration Form Validation
+// Real-time Registration Form Validation
+document.getElementById("registerForm").addEventListener("input", function(event) {
+    const input = event.target;
+    if (!input.value) {
+        input.classList.add("is-invalid");
+    } else {
+        input.classList.remove("is-invalid");
+    }
+});
+
+// Registration Form Validation on Submit
 document.getElementById("registerForm").addEventListener("submit", function(event) {
     event.preventDefault();
     let valid = true;
 
+    // Check all inputs
     document.querySelectorAll("#registerForm .form-control").forEach(input => {
         if (!input.value) {
             input.classList.add("is-invalid");
@@ -62,6 +78,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         }
     });
 
+    // Age Validation
     const age = document.getElementById("regAge");
     if (age.value < 18) {
         age.classList.add("is-invalid");
@@ -70,6 +87,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         age.classList.remove("is-invalid");
     }
 
+    // Contact Number Validation
     const contactNumber = document.getElementById("regContact");
     if (!/^\d{10}$/.test(contactNumber.value)) {
         contactNumber.classList.add("is-invalid");
@@ -78,6 +96,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         contactNumber.classList.remove("is-invalid");
     }
 
+    // Email Validation
     const email = document.getElementById("regEmail");
     const isEmailValid = /\S+@\S+\.\S+/.test(email.value);
     if (!isEmailValid) {
@@ -87,6 +106,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         email.classList.remove("is-invalid");
     }
 
+    // Password and Confirm Password Validation
     const password = document.getElementById("regPassword");
     const confirmPassword = document.getElementById("regConfirmPassword");
     const isPasswordValid = validatePassword(password.value);
@@ -104,5 +124,10 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         confirmPassword.classList.remove("is-invalid");
     }
 
-    if (valid) alert("Registration successful!");
+    // Submit if all validations pass
+    if (valid) {
+        alert("Registration successful!");
+        // Optional: Redirect to login page or dashboard
+        window.location.href = "donor-dash.html";
+    }
 });
