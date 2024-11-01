@@ -15,10 +15,79 @@ function openForm(formType) {
     document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
   }
   
+  // New functions for handling form submissions and success messages
+  function showSuccessMessage(message) {
+    const successElement = document.getElementById('successMessage');
+    successElement.querySelector('.message-text').textContent = message;
+    successElement.style.display = 'flex';
+    
+    // Automatically hide the message after 5 seconds
+    setTimeout(() => {
+      closeMessage();
+    }, 5000);
+  }
+  
+  function closeMessage() {
+    document.getElementById('successMessage').style.display = 'none';
+  }
+  
+  function submitDonation(event) {
+    event.preventDefault();
+    
+    // Get form data
+    const form = document.getElementById('bloodDonationForm');
+    const formData = new FormData(form);
+    
+    // Here you would typically send the data to your backend
+    // For now, we'll just simulate a successful submission
+    
+    // Show success message
+    showSuccessMessage('Blood donation request submitted successfully!');
+    
+    // Clear form and close modal
+    form.reset();
+    closeForm();
+    
+    // Optionally, refresh the donation history table
+    // You would typically do this after getting a response from your backend
+    refreshDonationHistory();
+  }
+  
+  function submitRequest(event) {
+    event.preventDefault();
+    
+    // Get form data
+    const form = document.getElementById('bloodRequestForm');
+    const formData = new FormData(form);
+    
+    // Here you would typically send the data to your backend
+    // For now, we'll just simulate a successful submission
+    
+    // Show success message
+    showSuccessMessage('Blood request submitted successfully!');
+    
+    // Clear form and close modal
+    form.reset();
+    closeForm();
+    
+    // Optionally, refresh the request history table
+    // You would typically do this after getting a response from your backend
+    refreshRequestHistory();
+  }
+  
+  function refreshDonationHistory() {
+    // Function to refresh the donation history table
+    // You would typically fetch updated data from your backend here
+    console.log('Refreshing donation history...');
+  }
+  
+  function refreshRequestHistory() {
+    // Function to refresh the request history table
+    // You would typically fetch updated data from your backend here
+    console.log('Refreshing request history...');
+  }
+  
   function logout() {
     alert("Logging out...");
-    // Clear user data (if any) - adjust as needed for your application
-    //localStorage.removeItem('user'); // Example for removing user data
-    // Redirect to login page
-    window.location.href = 'donor_login.html'; // Adjust the path as needed
-}
+    window.location.href = 'donor_login.html';
+  }

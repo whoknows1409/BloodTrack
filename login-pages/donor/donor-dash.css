@@ -1,4 +1,4 @@
-/* Updated styles.css */
+/* Base styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,6 +6,7 @@ body {
   background-color: #f8f8f8;
 }
 
+/* Header styles */
 .dashboard-header {
   background-color: #e23636;
   padding: 20px;
@@ -37,6 +38,42 @@ body {
   cursor: pointer;
 }
 
+/* Success Message styles */
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 4px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.close-message {
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+/* Main content styles */
 .dashboard-main {
   padding: 20px;
 }
@@ -54,6 +91,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Tab styles */
 .tab-section {
   display: flex;
   gap: 10px;
@@ -61,11 +99,11 @@ body {
 }
 
 .tab-btn {
-  padding: 15px 30px; /* Increase padding for larger button size */
-  font-size: 1.1em; /* Increase font size */
-  width: 100%; /* Make buttons full width */
-  max-width: 200px; /* Optional: limit width for larger screens */
-  margin: 10px 0; /* Add space between buttons */
+  padding: 15px 30px;
+  font-size: 1.1em;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px 0;
   background-color: #e23636;
   color: white;
   border: none;
@@ -73,13 +111,19 @@ body {
   cursor: pointer;
 }
 
+.tab-btn.active {
+  background-color: #b22424;
+}
+
+/* Table styles */
 .tab-content table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-.tab-content th, .tab-content td {
+.tab-content th,
+.tab-content td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
@@ -95,6 +139,7 @@ body {
 .pending { background-color: yellow; color: black; }
 .rejected { background-color: red; }
 
+/* Modal styles */
 .modal {
   display: none;
   position: fixed;
@@ -123,7 +168,7 @@ body {
   font-size: 20px;
 }
 
-/* Updated form layout */
+/* Form styles */
 .form-layout {
   display: flex;
   flex-direction: column;
@@ -165,16 +210,23 @@ button[type="submit"] {
   margin-top: 10px;
 }
 
-/* Styles for buttons in Quick Actions */
+/* Quick Actions buttons */
 .quick-actions button {
-  padding: 15px 30px; /* Increase padding for larger button size */
-  font-size: 1.1em; /* Increase font size */
-  width: 100%; /* Make buttons full width */
-  max-width: 200px; /* Optional: limit width for larger screens */
-  margin: 10px 0; /* Add space between buttons */
+  padding: 15px 30px;
+  font-size: 1.1em;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px 0;
   background-color: #e23636;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.quick-actions button:hover,
+.tab-btn:hover,
+button[type="submit"]:hover {
+  background-color: #b22424;
+  transition: background-color 0.3s ease;
 }
