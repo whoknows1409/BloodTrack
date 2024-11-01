@@ -8,13 +8,33 @@ function openForm(formType) {
     document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
   }
   
-  function openTab(tabName) {
+  async function openTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
     document.getElementById(tabName).style.display = 'block';
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
+  
+    const donorId = sessionStorage.getItem('donorId'); // Ensure donorId is stored upon login
+    
+    if (tabName === 'donationHistory') {
+      const donations = await fetchData(`/donor/donation-history/${donorId}`);
+      updateDonationHistoryTable(donations);
+    } else if (tabName === 'requestHistory') {
+      const requests = await fetchData(`/donor/request-history/${donorId}`);
+      updateRequestHistoryTable(requests);
+    }
   }
   
+// Helper function to fetch data
+async function fetchData(url) {
+    const response = await fetch(url);
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error('Error fetching data:', response.statusText);
+    }
+  }
+
   // New functions for handling form submissions and success messages
   function showSuccessMessage(message) {
     const successElement = document.getElementById('successMessage');
@@ -75,6 +95,41 @@ function openForm(formType) {
     refreshRequestHistory();
   }
   
+  // Update table functions
+function updateDonationHistoryTable(donations) {
+    const table = document.querySelector('#donationHistory table');
+    table.innerHTML = `<tr><th>Donation Date</th><th>Blood Type</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
+    donations.forEach(donation => {
+      const row = `<tr>
+        <td>${donation.donation_date}</td>
+        <td>${donation.blood_type}</td>
+        <td>${donation.location}</td>
+        <td class="status ${donation.status.toLowerCase()}">${donation.status}</td>
+        <td>${donation.response_date || '-'}</td>
+        <td>${donation.comments || '-'}</td>
+      </tr>`;
+      table.innerHTML += row;
+    });
+  }
+  
+  function updateRequestHistoryTable(requests) {
+    const table = document.querySelector('#requestHistory table');
+    table.innerHTML = `<tr><th>Request Date</th><th>Blood Type & Units</th><th>Purpose</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
+    requests.forEach(request => {
+      const row = `<tr>
+        <td>${request.request_date}</td>
+        <td>${request.blood_type} (${request.units} units)</td>
+        <td>${request.purpose}</td>
+        <td>${request.location}</td>
+        <td class="status ${request.status.toLowerCase()}">${request.status}</td>
+        <td>${request.response_date || '-'}</td>
+        <td>${request.comments || '-'}</td>
+      </tr>`;
+      table.innerHTML += row;
+    });
+  }
+  
+
   function refreshDonationHistory() {
     // Function to refresh the donation history table
     // You would typically fetch updated data from your backend here

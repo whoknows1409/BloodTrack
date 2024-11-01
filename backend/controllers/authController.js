@@ -41,7 +41,7 @@ exports.loginDonor = (req, res) => {
     const { email, password } = req.body;
 
     // Query to fetch the donor's password by email
-    const query = 'SELECT password FROM donors WHERE email = ?';
+    const query = 'SELECT * FROM donors WHERE email = ?';
 
     db.query(query, [email], (error, results) => {
         if (error) {
@@ -51,7 +51,7 @@ exports.loginDonor = (req, res) => {
         if (results.length > 0) {
             // Check if the plain-text password matches
             if (results[0].password === password) {
-                res.json({ message: "Login successful" });
+                res.json({ message: "Login successful", success: true, donorId: results[0].id });
             } else {
                 res.status(401).json({ message: "Invalid credentials" });
             }
@@ -89,7 +89,7 @@ exports.loginRecipient = (req, res) => {
     const { email, password } = req.body;
 
     // Query to fetch the recipient's password by email
-    const query = 'SELECT password FROM recipients WHERE email = ?';
+    const query = 'SELECT * FROM recipients WHERE email = ?';
 
     db.query(query, [email], (error, results) => {
         if (error) {
@@ -99,7 +99,7 @@ exports.loginRecipient = (req, res) => {
         if (results.length > 0) {
             // Check if the plain-text password matches
             if (results[0].password === password) {
-                res.json({ message: "Login successful" });
+                res.json({ message: "Login successful", success: true });
             } else {
                 res.status(401).json({ message: "Invalid credentials" });
             }

@@ -21,7 +21,7 @@ function validatePassword(password) {
     return password.length >= minLength && hasUppercase && hasNumber && hasSpecialChar;
 }
 
-// Login Form Validation and Handling
+// Login Form Handling
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
     const email = document.getElementById("loginEmail").value;
@@ -33,6 +33,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         return;
     }
 
+    console.log("Login form submitted"); // Log submission
+
     // Send login request to the backend
     fetch('http://localhost:3000/auth/donor/login', {
         method: 'POST',
@@ -43,11 +45,16 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         if (!response.ok) {
             throw new Error("Login failed: " + response.statusText);
         }
-        return response.text();
+        return response.json(); // Parse JSON response
     })
-    .then(message => {
-        alert(message);
-        window.location.href = "donor-dash.html"; // Redirect to donor dashboard
+    .then(data => {
+        console.log(data); // Log response data
+        alert(data.message); // Display the message from the response
+        if (data.success) {
+            sessionStorage.setItem('donorId', data.donorId); // Store donorId in sessionStorage
+            console.log("Donor ID stored in session:", data.donorId); // Log stored ID
+            window.location.href = "donor-dash.html"; // Redirect to donor dashboard
+        }
     })
     .catch(error => {
         console.error('Error:', error);
@@ -83,11 +90,14 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         if (!response.ok) {
             throw new Error("Registration failed: " + response.statusText);
         }
-        return response.text();
+        return response.json(); // Parse JSON response
     })
-    .then(message => {
-        alert(message);
-        window.location.href = "donor-dash.html"; // Redirect to donor dashboard
+    .then(data => {
+        alert(data.message); // Display the message from the response
+        if (data.success) {
+            sessionStorage.setItem('donorId', data.donorId); // Store donorId in sessionStorage
+            window.location.href = "donor-dash.html"; // Redirect to donor dashboard
+        }
     })
     .catch(error => {
         console.error('Error:', error);
@@ -119,7 +129,7 @@ document.getElementById("registerForm").addEventListener("input", function(event
     }
 });
 
-// Registration Form Validation on Submit
+// Additional Registration Form Validation on Submit
 document.getElementById("registerForm").addEventListener("submit", function(event) {
     event.preventDefault();
     let valid = true;
@@ -162,7 +172,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         email.classList.remove("is-invalid");
     }
 
-    // Password and Confirm Password Validation
+    // Password Validation
     const password = document.getElementById("regPassword");
     const confirmPassword = document.getElementById("regConfirmPassword");
     const isPasswordValid = validatePassword(password.value);
