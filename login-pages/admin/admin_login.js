@@ -24,7 +24,7 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     }
 
     // Send login request to backend
-    fetch('http://localhost:3000/auth/login', { // Adjusted the endpoint
+    fetch('http://localhost:3000/auth/admin/login', { // Adjusted the endpoint
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
