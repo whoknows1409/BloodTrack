@@ -58,15 +58,6 @@
         <button onclick="openForm('donation')">Donate Blood</button>
         <button onclick="openForm('request')">Request Blood</button>
       </div>
-
-      <!-- Status Summary Card -->
-      <div class="card status-summary">
-        <h2>Status Summary</h2>
-        <p>Requests Made: <span id="totalRequestsSummary">0</span></p>
-        <p>Approved: <span id="approvedRequestsSummary">0</span></p>
-        <p>Pending: <span id="pendingRequestsSummary">0</span></p>
-        <p>Rejected: <span id="rejectedRequestsSummary">0</span></p>
-      </div>
     </div>
 
     <!-- Tabs for Donation and Request History -->
@@ -74,7 +65,7 @@
       <button onclick="openTab('donationHistory')" class="tab-btn active">Donation History</button>
       <button onclick="openTab('requestHistory')" class="tab-btn">Request History</button>
     </div>
-    
+
     <div id="donationHistory" class="tab-content">
       <table>
         <tr>
@@ -88,7 +79,7 @@
         <!-- Donation history will be populated dynamically -->
       </table>
     </div>
-    
+
     <div id="requestHistory" class="tab-content" style="display:none;">
       <table>
         <tr>
@@ -106,31 +97,38 @@
   </main>
 
   <!-- Donation Form -->
-  <div id="donationForm" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeForm()">×</span>
-      <h2>Donate Blood</h2>
-      <form class="form-layout" id="bloodDonationForm" onsubmit="submitDonation(event)">
-        <div class="form-group">
-          <label>Last Donation Date:</label>
-          <input type="date" required name="lastDonationDate">
-        </div>
-        <div class="form-group">
-          <label>Current Health Status:</label>
-          <input type="text" required name="healthStatus">
-        </div>
-        <div class="form-group">
-          <label>Recent Medications:</label>
-          <input type="text" name="medications">
-        </div>
-        <div class="form-group">
-          <label>Location:</label>
-          <input type="text" placeholder="City or hospital name" required name="location">
-        </div>
-        <button type="submit">Submit for Approval</button>
-      </form>
-    </div>
+<!-- Donation Form -->
+<div id="donationForm" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeForm()">×</span>
+    <h2>Donate Blood</h2>
+    <form class="form-layout" id="bloodDonationForm" onsubmit="submitDonation(event)">
+      <div class="form-group">
+        <label>Last Donation Date:</label>
+        <input type="date" id="donationDate" name="donationDate" required>
+      </div>
+      <div class="form-group">
+        <label>Blood Type:</label>
+        <select id="bloodType" name="bloodType" required>
+          <option value="">Select</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Location:</label>
+        <input type="text" id="location" name="location" placeholder="City or hospital name" required>
+      </div>
+      <button type="submit">Submit for Approval</button>
+    </form>
   </div>
+</div>
 
   <!-- Request Form -->
   <div id="requestForm" class="modal">
@@ -140,38 +138,33 @@
       <form class="form-layout" id="bloodRequestForm" onsubmit="submitRequest(event)">
         <div class="form-group">
           <label>Required Blood Type:</label>
-          <select required name="bloodType">
+          <select id="requestBloodType" name="requestBloodType" required>
             <option value="">Select</option>
-            <option>A+</option>
-            <option>A-</option>
-            <option>B+</option>
-            <option>B-</option>
-            <option>AB+</option>
-            <option>AB-</option>
-            <option>O+</option>
-            <option>O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
           </select>
         </div>
         <div class="form-group">
           <label>Units Needed:</label>
-          <input type="number" min="1" required name="units">
+          <input type="number" id="units" min="1" required>
         </div>
         <div class="form-group">
           <label>Purpose/Emergency Level:</label>
-          <input type="text" required name="purpose">
-        </div>
-        <div class="form-group">
-          <label>Required Date:</label>
-          <input type="date" required name="requiredDate">
+          <input type="text" id="purpose" required>
         </div>
         <div class="form-group">
           <label>Location:</label>
-          <input type="text" placeholder="City or hospital name" required name="location">
+          <input type="text" id="requestLocation" name="requestLocation" placeholder="City or hospital name" required>
         </div>
         <button type="submit">Submit Request</button>
       </form>
     </div>
   </div>
-
 </body>
 </html>

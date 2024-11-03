@@ -1,148 +1,218 @@
-// script.js
+// donor-dash.js
 
 function openForm(formType) {
-    document.getElementById(formType + 'Form').style.display = 'block';
+  document.getElementById(formType + 'Form').style.display = 'block';
+}
+
+function closeForm() {
+  document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+}
+
+async function openTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+  document.getElementById(tabName).style.display = 'block';
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
+
+  const donorId = sessionStorage.getItem('donorId');
+
+  if (tabName === 'donationHistory') {
+    const donations = await fetchData(`http://localhost:3000/donor/donation-history/${donorId}`);
+    if (donations) updateDonationHistoryTable(donations);
+  } else if (tabName === 'requestHistory') {
+    const requests = await fetchData(`http://localhost:3000/donor/request-history/${donorId}`);
+    if (requests) updateRequestHistoryTable(requests);
   }
-  
-  function closeForm() {
-    document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
-  }
-  
-  async function openTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-    document.getElementById(tabName).style.display = 'block';
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
-  
-    const donorId = sessionStorage.getItem('donorId'); // Ensure donorId is stored upon login
-    
-    if (tabName === 'donationHistory') {
-      const donations = await fetchData(`/donor/donation-history/${donorId}`);
-      updateDonationHistoryTable(donations);
-    } else if (tabName === 'requestHistory') {
-      const requests = await fetchData(`/donor/request-history/${donorId}`);
-      updateRequestHistoryTable(requests);
-    }
-  }
-  
-// Helper function to fetch data
+}
+
 async function fetchData(url) {
+  try {
     const response = await fetch(url);
-    if (response.ok) {
-      return response.json();
-    } else {
-      console.error('Error fetching data:', response.statusText);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    showErrorMessage('Failed to fetch data. Please try again later.');
+    return null;
   }
+}
 
-  // New functions for handling form submissions and success messages
-  function showSuccessMessage(message) {
-    const successElement = document.getElementById('successMessage');
-    successElement.querySelector('.message-text').textContent = message;
-    successElement.style.display = 'flex';
-    
-    // Automatically hide the message after 5 seconds
-    setTimeout(() => {
-      closeMessage();
-    }, 5000);
+function showSuccessMessage(message) {
+  const successElement = document.getElementById('successMessage');
+  successElement.querySelector('.message-text').textContent = message;
+  successElement.style.display = 'flex';
+
+  setTimeout(() => {
+    closeMessage();
+  }, 5000);
+}
+
+function showErrorMessage(message) {
+  const errorElement = document.getElementById('errorMessage') || createErrorMessage();
+  errorElement.querySelector('.message-text').textContent = message;
+  errorElement.style.display = 'flex';
+
+  setTimeout(() => {
+    errorElement.style.display = 'none';
+  }, 5000);
+}
+
+function createErrorMessage() {
+  const div = document.createElement('div');
+  div.id = 'errorMessage';
+  div.innerHTML = `
+    <div class="message-text"></div>
+    <button onclick="this.parentElement.style.display='none'">×</button>
+  `;
+  div.style.cssText = 'display:none; background-color:#ffebee; padding:1rem; margin:1rem; border-radius:4px;';
+  document.body.appendChild(div);
+  return div;
+}
+
+function closeMessage() {
+  document.getElementById('successMessage').style.display = 'none';
+  const errorMessage = document.getElementById('errorMessage');
+  if (errorMessage) errorMessage.style.display = 'none';
+}
+
+async function submitDonation(event) {
+  event.preventDefault();
+
+  const form = document.getElementById('bloodDonationForm');
+  const donorId = sessionStorage.getItem('donorId');
+
+  // Create the request body matching the database schema
+  const requestBody = {
+    donorId: donorId,
+    donationData: {
+      donor_id: donorId,
+      donation_date: form.donationDate.value,
+      blood_type: form.bloodType.value,
+      location: form.location.value,
+      status: 'Pending'  // Set default status
+    }
+  };
+
+  console.log('Submitting donation data:', requestBody); // Debug log
+
+  try {
+    const response = await fetch('http://localhost:3000/donor/add-donation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      showSuccessMessage('Blood donation request submitted successfully!');
+      form.reset();
+      closeForm();
+      await refreshDonationHistory();
+    } else {
+      showErrorMessage(data.message || 'Failed to submit donation request');
+    }
+  } catch (error) {
+    console.error('Error submitting donation:', error);
+    showErrorMessage('Failed to submit donation. Please try again later.');
   }
-  
-  function closeMessage() {
-    document.getElementById('successMessage').style.display = 'none';
+}
+
+
+async function submitRequest(event) {
+  event.preventDefault();
+
+  const form = document.getElementById('bloodRequestForm');
+  const donorId = sessionStorage.getItem('donorId');
+  const requestBody = {
+    donorId: donorId,
+    requestData: {
+      blood_type: form.requestBloodType.value,
+      units: form.units.value,
+      purpose: form.purpose.value,
+      location: form.requestLocation.value,
+    }
+  };
+
+  console.log('Submitting request data:', requestBody); // Debug log
+
+  try {
+    const response = await fetch('http://localhost:3000/donor/add-request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      showSuccessMessage('Blood request submitted successfully!');
+      form.reset();
+      closeForm();
+      await refreshRequestHistory();
+    } else {
+      showErrorMessage(data.message || 'Failed to submit blood request');
+    }
+  } catch (error) {
+    console.error('Error submitting request:', error);
+    showErrorMessage('Failed to submit request. Please try again later.');
   }
-  
-  function submitDonation(event) {
-    event.preventDefault();
-    
-    // Get form data
-    const form = document.getElementById('bloodDonationForm');
-    const formData = new FormData(form);
-    
-    // Here you would typically send the data to your backend
-    // For now, we'll just simulate a successful submission
-    
-    // Show success message
-    showSuccessMessage('Blood donation request submitted successfully!');
-    
-    // Clear form and close modal
-    form.reset();
-    closeForm();
-    
-    // Optionally, refresh the donation history table
-    // You would typically do this after getting a response from your backend
-    refreshDonationHistory();
-  }
-  
-  function submitRequest(event) {
-    event.preventDefault();
-    
-    // Get form data
-    const form = document.getElementById('bloodRequestForm');
-    const formData = new FormData(form);
-    
-    // Here you would typically send the data to your backend
-    // For now, we'll just simulate a successful submission
-    
-    // Show success message
-    showSuccessMessage('Blood request submitted successfully!');
-    
-    // Clear form and close modal
-    form.reset();
-    closeForm();
-    
-    // Optionally, refresh the request history table
-    // You would typically do this after getting a response from your backend
-    refreshRequestHistory();
-  }
-  
-  // Update table functions
+}
+
 function updateDonationHistoryTable(donations) {
-    const table = document.querySelector('#donationHistory table');
-    table.innerHTML = `<tr><th>Donation Date</th><th>Blood Type</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
-    donations.forEach(donation => {
-      const row = `<tr>
-        <td>${donation.donation_date}</td>
-        <td>${donation.blood_type}</td>
-        <td>${donation.location}</td>
-        <td class="status ${donation.status.toLowerCase()}">${donation.status}</td>
-        <td>${donation.response_date || '-'}</td>
-        <td>${donation.comments || '-'}</td>
-      </tr>`;
-      table.innerHTML += row;
-    });
-  }
-  
-  function updateRequestHistoryTable(requests) {
-    const table = document.querySelector('#requestHistory table');
-    table.innerHTML = `<tr><th>Request Date</th><th>Blood Type & Units</th><th>Purpose</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
-    requests.forEach(request => {
-      const row = `<tr>
-        <td>${request.request_date}</td>
-        <td>${request.blood_type} (${request.units} units)</td>
-        <td>${request.purpose}</td>
-        <td>${request.location}</td>
-        <td class="status ${request.status.toLowerCase()}">${request.status}</td>
-        <td>${request.response_date || '-'}</td>
-        <td>${request.comments || '-'}</td>
-      </tr>`;
-      table.innerHTML += row;
-    });
-  }
-  
+  const table = document.querySelector('#donationHistory table');
+  table.innerHTML = `<tr><th>Donation Date</th><th>Blood Type</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
+  donations.forEach(donation => {
+    const row = `<tr>
+      <td>${donation.donation_date}</td>
+      <td>${donation.blood_type}</td>
+      <td>${donation.location}</td>
+      <td class="status ${donation.status.toLowerCase()}">${donation.status}</td>
+      <td>${donation.response_date || '-'}</td>
+      <td>${donation.comments || '-'}</td>
+    </tr>`;
+    table.innerHTML += row;
+  });
+}
 
-  function refreshDonationHistory() {
-    // Function to refresh the donation history table
-    // You would typically fetch updated data from your backend here
-    console.log('Refreshing donation history...');
-  }
-  
-  function refreshRequestHistory() {
-    // Function to refresh the request history table
-    // You would typically fetch updated data from your backend here
-    console.log('Refreshing request history...');
-  }
-  
-  function logout() {
-    alert("Logging out...");
-    window.location.href = 'donor_login.html';
-  }
+function updateRequestHistoryTable(requests) {
+  const table = document.querySelector('#requestHistory table');
+  table.innerHTML = `<tr><th>Request Date</th><th>Blood Type & Units</th><th>Purpose</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
+  requests.forEach(request => {
+    const row = `<tr>
+      <td>${request.request_date}</td>
+      <td>${request.blood_type} (${request.units} units)</td>
+      <td>${request.purpose}</td>
+      <td>${request.location}</td>
+      <td class="status ${request.status.toLowerCase()}">${request.status}</td>
+      <td>${request.response_date || '-'}</td>
+      <td>${request.comments || '-'}</td>
+    </tr>`;
+    table.innerHTML += row;
+  });
+}
+
+async function refreshDonationHistory() {
+  const donorId = sessionStorage.getItem('donorId');
+  const donations = await fetchData(`http://localhost:3000/donor/donation-history/${donorId}`);
+  if (donations) updateDonationHistoryTable(donations);
+}
+
+async function refreshRequestHistory() {
+  const donorId = sessionStorage.getItem('donorId');
+  const requests = await fetchData(`http://localhost:3000/donor/request-history/${donorId}`);
+  if (requests) updateRequestHistoryTable(requests);
+}
+
+function logout() {
+  sessionStorage.removeItem('donorId');
+  window.location.href = 'donor_login.html';
+}
