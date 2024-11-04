@@ -99,7 +99,7 @@ exports.loginRecipient = (req, res) => {
         if (results.length > 0) {
             // Check if the plain-text password matches
             if (results[0].password === password) {
-                res.json({ message: "Login successful", success: true });
+                res.json({ message: "Login successful", success: true, recipientId: results[0].id });
             } else {
                 res.status(401).json({ message: "Invalid credentials" });
             }

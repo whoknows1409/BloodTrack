@@ -19,7 +19,7 @@
         <li><button class="logout-btn" onclick="logout()">Logout</button></li>
       </ul>
     </nav>
-    <p class="welcome-message">Welcome, Recipient Name!</p>
+    <p class="welcome-message">Welcome, <span id="full-name"></span>!</p>
   </header>
 
   <main class="dashboard-main">
@@ -27,11 +27,11 @@
       <!-- Total Requests Card -->
       <div class="card total-requests">
         <h2>Total Requests</h2>
-        <p class="number">20</p>
+        <p class="number" id="total-requests"></p>
         <div class="status-breakdown">
-          <p>Approved: 12</p>
-          <p>Pending: 5</p>
-          <p>Rejected: 3</p>
+          <p>Approved: <span id="approved-count"></span></p>
+          <p>Pending: <span id="pending-count"></span></p>
+          <p>Rejected: <span id="rejected-count"></span></p>
         </div>
       </div>
 
@@ -44,10 +44,7 @@
       <!-- Status Summary Card -->
       <div class="card status-summary">
         <h2>Status Summary</h2>
-        <p>Requests Made: 20</p>
-        <p>Approved: 12</p>
-        <p>Pending: 5</p>
-        <p>Rejected: 3</p>
+        <p id="requests-summary"></p>
       </div>
     </div>
 
@@ -55,63 +52,58 @@
     <div class="tab-section">
       <button onclick="openTab('requestHistory')" class="tab-btn active">Request History</button>
     </div>
-    <div id="requestHistory" class="tab-content">
+    <div id="requestHistory" class="tab-content" style="display:none;">
       <table>
-        <tr>
-          <th>Request Date</th>
-          <th>Blood Type & Units</th>
-          <th>Status</th>
-          <th>Response Date</th>
-          <th>Comments</th>
-        </tr>
-        <!-- Sample data row -->
-        <tr>
-          <td>2024-10-10</td>
-          <td>B- (2 units)</td>
-          <td class="status approved">Approved</td>
-          <td>2024-10-12</td>
-          <td>Request approved by admin</td>
-        </tr>
+          <tr>
+            <th>Request Date</th>
+            <th>Blood Type & Units</th>
+            <th>Purpose</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Response Date</th>
+            <th>Comments</th>
+          </tr>
+          <!-- Rows populated by recipient_dash.js -->
       </table>
     </div>
   </main>
 
   <!-- Request Form Modal -->
-<div id="requestForm" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeRequestForm()">×</span>
-    <h2>Request Blood</h2>
-    <form id="requestFormContent" class="form-layout">
-      <div class="form-group">
-        <label for="bloodType">Required Blood Type:</label>
-        <select id="bloodType" required>
-          <option value="">Select</option>
-          <option>A+</option>
-          <option>A-</option>
-          <option>B+</option>
-          <option>B-</option>
-          <option>AB+</option>
-          <option>AB-</option>
-          <option>O+</option>
-          <option>O-</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="unitsNeeded">Units Needed:</label>
-        <input id="unitsNeeded" type="number" min="1" required>
-      </div>
-      <div class="form-group">
-        <label for="purpose">Purpose/Emergency Level:</label>
-        <input id="purpose" type="text" required>
-      </div>
-      <div class="form-group">
-        <label for="requiredDate">Required Date:</label>
-        <input id="requiredDate" type="date" required>
-      </div>
-      <button type="submit">Submit Request</button>
-    </form>
+  <div id="requestForm" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeRequestForm()">×</span>
+      <h2>Request Blood</h2>
+      <form id="bloodRequestForm" class="form-layout">
+        <div class="form-group">
+          <label for="bloodType">Required Blood Type:</label>
+          <select id="requestBloodType" required>
+            <option value="">Select</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Units Needed:</label>
+          <input id="units" type="number" min="1" required>
+        </div>
+        <div class="form-group">
+          <label>Purpose/Emergency Level:</label>
+          <input id="purpose" type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Location:</label>
+          <input type="text" id="requestLocation" name="requestLocation" placeholder="City or hospital name" required>
+        </div>
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
   </div>
-</div>
 
 </body>
 </html>

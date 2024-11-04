@@ -31,7 +31,6 @@ document.getElementById("regPassword").addEventListener("input", function () {
     }
 });
 
-// Login Form Validation
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
     const email = document.getElementById("loginEmail");
@@ -59,11 +58,16 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
         })
         .then(response => {
             if (!response.ok) throw new Error('Login failed. Please check your credentials.');
-            return response.text();
+            return response.json(); // Parse the response as JSON
         })
         .then(data => {
-            alert(data);
-            window.location.href = "recipient_dash.html";  // Redirect to recipient dashboard
+            console.log(data); // Log the response for debugging
+            alert(data.message || "Login successful"); // Notify user
+            if (data.success) {
+                sessionStorage.setItem('recipientId', data.recipientId); // Store recipientId in sessionStorage
+                console.log("Recipient ID stored in session:", data.recipientId); // Log stored ID
+                window.location.href = "recipient_dash.html"; // Redirect to recipient dashboard
+            }
         })
         .catch(error => {
             alert(error.message);
@@ -123,7 +127,10 @@ document.getElementById("registerForm").addEventListener("submit", function (eve
     })
     .then(data => {
         alert(data);  // Display success message
+        if (data.success) {
+            sessionStorage.setItem('recipientId', data.recipientIdId);
         window.location.href = "recipient_dash.html";  // Redirect to recipient dashboard
+        }
     })
     .catch(error => {
         alert(error.message);  // Display error message
