@@ -1,0 +1,79 @@
+<!-- hospital_dash.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard - BloodTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="hospital_dash.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Hospital Dashboard</h1>
+            <button id="logoutBtn">Logout</button>
+        </header>
+        <main>
+            <section class="overview">
+                <h2>Overview</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Total Requests</h3>
+                        <p id="totalRequests">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Requests</h3>
+                        <p id="pendingRequests">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Approved Requests</h3>
+                        <p id="approvedRequests">0</p>
+                    </div>
+                </div>
+            </section>
+            <section class="blood-requests">
+                <h2>Blood Requests</h2>
+                <button id="newRequestBtn">New Request</button>
+                <table id="requestsTable">
+                    <thead>
+                        <tr>
+                            <th>Blood Type</th>
+                            <th>Units</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Requests will be populated here -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <h2>New Blood Request</h2>
+            <form id="requestForm">
+                <select id="bloodType" required>
+                    <option value="">Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+                <input type="number" id="units" placeholder="Units Required" min="1" required>
+                <textarea id="purpose" placeholder="Purpose" required></textarea>
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="hospital_dash.js"></script>
+</body>
+</html>

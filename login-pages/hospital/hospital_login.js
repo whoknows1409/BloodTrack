@@ -47,6 +47,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     // Proceed with login
     alert("Login successful!");
+    window.location.href="hospital_dash.html";
     // Add further login logic here (e.g., server authentication)
 });
 
@@ -91,6 +92,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
 
     // Proceed with registration
     alert("Registration successful!");
+    window.location.href="hospital_dash.html";
     // Add further registration logic here (e.g., saving data to the server)
 });
 
