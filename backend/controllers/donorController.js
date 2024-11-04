@@ -1,6 +1,27 @@
 // donorController.js
 const db = require('../config/db');
 
+const getDonorDetails = (donorId) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT id, full_name, blood_group, email, contact_number, address 
+            FROM donors 
+            WHERE id = ?
+        `;
+        
+        db.query(query, [donorId], (error, results) => {
+            if (error) {
+                console.error('Error fetching donor details:', error);
+                return reject({ error: 'Database error' });
+            }
+            if (results.length === 0) {
+                return reject({ error: 'Donor not found' });
+            }
+            resolve(results[0]);
+        });
+    });
+};
+
 // Function to get donation history for a donor
 const getDonationHistory = (donorId) => {
     return new Promise((resolve, reject) => {
@@ -218,6 +239,23 @@ const getDonationCounts = async (req, res) => {
 
 // Export the controller functions wrapped in route handlers
 module.exports = {
+    getDonorDetails: async (req, res) => {
+        try {
+            const donorId = req.params.donorId;
+            const donorDetails = await getDonorDetails(donorId);
+            res.json({
+                success: true,
+                data: donorDetails
+            });
+        } catch (error) {
+            console.error('Error in getDonorDetails handler:', error);
+            res.status(error.error === 'Donor not found' ? 404 : 500).json({
+                success: false,
+                message: error.error || 'Internal server error'
+            });
+        }
+    },
+
     getDonationHistory: async (req, res) => {
         try {
             const donorId = req.params.donorId;

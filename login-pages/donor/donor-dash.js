@@ -1,6 +1,36 @@
 // donor-dash.js
 
-function openForm(formType) {
+async function fetchDonorDetails() {
+  const donorId = sessionStorage.getItem('donorId');
+  try {
+      const response = await fetch(`http://localhost:3000/donor/details/${donorId}`);
+      if (!response.ok) throw new Error('Failed to fetch donor details');
+      return await response.json();
+  } catch (error) {
+      console.error('Error fetching donor details:', error);
+      return null;
+  }
+}
+
+async function openForm(formType) {
+  if (formType === 'donation') {
+      const donorId = sessionStorage.getItem('donorId');
+      try {
+          const response = await fetch(`http://localhost:3000/donor/details/${donorId}`);
+          const { success, data } = await response.json();
+          
+          if (success) {
+              document.getElementById('bloodType').value = data.blood_group;
+          } else {
+              throw new Error('Failed to fetch donor details');
+          }
+      } catch (error) {
+          console.error('Error fetching donor details:', error);
+          showErrorMessage('Failed to load donor information. Please try again.');
+          return;
+      }
+  }
+  
   document.getElementById(formType + 'Form').style.display = 'block';
 }
 
@@ -77,6 +107,7 @@ function closeMessage() {
   if (errorMessage) errorMessage.style.display = 'none';
 }
 
+// Update the submit donation function
 async function submitDonation(event) {
   event.preventDefault();
 
@@ -85,41 +116,41 @@ async function submitDonation(event) {
 
   // Create the request body matching the database schema
   const requestBody = {
-    donorId: donorId,
-    donationData: {
-      donor_id: donorId,
-      donation_date: form.donationDate.value,
-      blood_type: form.bloodType.value,
-      location: form.location.value,
-      status: 'Pending'  // Set default status
-    }
+      donorId: donorId,
+      donationData: {
+          donor_id: donorId,
+          donation_date: form.donationDate.value,
+          blood_type: form.bloodType.value, // This will now be the donor's original blood type
+          location: form.location.value,
+          status: 'Pending'
+      }
   };
 
-  console.log('Submitting donation data:', requestBody); // Debug log
+  console.log('Submitting donation data:', requestBody);
 
   try {
-    const response = await fetch('http://localhost:3000/donor/add-donation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    });
+      const response = await fetch('http://localhost:3000/donor/add-donation', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      showSuccessMessage('Blood donation request submitted successfully!');
-      form.reset();
-      closeForm();
-      await refreshDonationHistory();
-    } else {
-      showErrorMessage(data.message || 'Failed to submit donation request');
-    }
+      if (response.ok) {
+          showSuccessMessage('Blood donation request submitted successfully!');
+          form.reset();
+          closeForm();
+          await refreshDonationHistory();
+      } else {
+          showErrorMessage(data.message || 'Failed to submit donation request');
+      }
   } catch (error) {
-    console.error('Error submitting donation:', error);
-    showErrorMessage('Failed to submit donation. Please try again later.');
+      console.error('Error submitting donation:', error);
+      showErrorMessage('Failed to submit donation. Please try again later.');
   }
 }
 

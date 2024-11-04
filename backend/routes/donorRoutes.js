@@ -12,5 +12,6 @@ router.post('/add-request', donorController.addBloodRequest);
 router.get('/donation-counts/:donorId', donorController.getDonationCounts);
 router.get('/request-counts/:donorId', donorController.getRequestCounts);
 
+router.get('/details/:donorId', donorController.getDonorDetails);
 
 module.exports = router;

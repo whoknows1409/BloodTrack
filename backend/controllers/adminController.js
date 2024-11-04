@@ -64,7 +64,7 @@ const adminController = {
                 d.donation_id, 
                 d.donor_id,
                 dr.full_name, 
-                d.blood_type,
+                dr.blood_group,
                 dr.address,
                 d.status, 
                 d.donation_date, 
