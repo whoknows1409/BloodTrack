@@ -35,7 +35,7 @@ const addBloodRequest = (recipientId, requestData) => {
         const query = `
             INSERT INTO requests 
             (recipient_id, request_date, blood_type, units, purpose, location, status)
-            VALUES (?, CURDATE(), ?, ?, ?,  ?, 'Pending')
+            VALUES (?, CURDATE(), ?, ?, ?, ?, 'Pending')
         `;
 
         const values = [
@@ -61,8 +61,8 @@ const addBloodRequestHandler = async (req, res) => {
         const { recipientId, requestData } = req.body;
         console.log('Received blood request in handler:', { recipientId, requestData });
         
-        // Validate blood type against allowed values
-        const validBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+        // Validate blood type against enum values
+        const validBloodTypes = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
         if (!validBloodTypes.includes(requestData.blood_type)) {
             throw new Error('Invalid blood type');
         }
@@ -71,8 +71,9 @@ const addBloodRequestHandler = async (req, res) => {
         res.json({
             success: true,
             message: 'Blood request submitted successfully',
-            requestId: result.insertId
+            donationId: result.insertId
         });
+        console.log('Blood request submitted successfully');
     } catch (error) {
         console.error('Error in addBloodRequest handler:', error);
         res.status(400).json({
@@ -117,7 +118,7 @@ module.exports = {
             res.json(results);
         } catch (error) {
             console.error('Error in getRequestHistory handler:', error);
-            res.status(500).json(error);
+            res.status(500).json({ error: 'Internal Server Error' });
         }
     },
 
