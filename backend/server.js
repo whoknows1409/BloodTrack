@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const donorRoutes = require('./routes/donorRoutes');
 const recipientRoutes = require('./routes/recipientRoutes');
 const authRoutes = require('./routes/authRoutes'); // Assuming authRoutes is already defined
+const adminRoutes = require('./routes/adminRoutes');
 const db = require('./config/db'); // Ensure DB is connected when the server starts
-//const recipientController = require('./controllers/recipientController');
 
 const app = express();
 const PORT = 3000;
@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 app.use('/donor', donorRoutes); // Link the donor routes
 app.use('/recipient', recipientRoutes);
+app.use('/admin', adminRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
