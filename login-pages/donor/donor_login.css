@@ -16,6 +16,7 @@ body, html {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e23636;
+    text-decoration: none;
 }
 
 .nav .login-btn {
@@ -32,17 +33,95 @@ body, html {
 
 .toggle-password {
     cursor: pointer;
-    color: #007bff;
+    color: #e23636;
     font-size: 0.9rem;
     float: right;
     margin-top: -30px;
+    margin-right: 10px;
+}
+
+/* Styling for the tabs */
+.nav-tabs .nav-link {
+    color: #666;
+    border: none;
+    padding: 10px 20px;
 }
 
 .nav-tabs .nav-link.active {
     background-color: #e23636;
     color: white;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    border: none;
+    color: #e23636;
+}
+
+/* Styling for forms */
+.tab-content {
+    padding: 20px 0;
+}
+
+.form-label {
+    color: #333;
+    font-weight: 500;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #e23636;
+    border-color: #e23636;
+    color: white;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #c62828 !important;
+    border-color: #c62828 !important;
+    box-shadow: none !important;
+}
+
+/* Form control styling */
+.form-control:focus,
+.form-select:focus {
+    border-color: #e23636;
+    box-shadow: 0 0 0 0.2rem rgba(226, 54, 54, 0.25);
 }
 
 .invalid-feedback {
-    display: block;
+    display: none;
+    color: #e23636;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 20px;
+}
+
+.modal-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.btn-close:focus {
+    box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
 }

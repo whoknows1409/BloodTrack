@@ -1,7 +1,7 @@
-/* Base Styles */
 body, html {
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
 }
 
 .header {
@@ -11,31 +11,167 @@ body, html {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 1000;
 }
 
 .nav .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e23636;
+    text-decoration: none;
 }
 
-.modal-body {
-    padding: 0;
-}
-
-.btn-primary {
-    background-color: #e23636;
+.modal-content {
+    border-radius: 10px;
     border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 20px 20px 0;
+}
+
+.modal-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.btn-close:focus {
+    box-shadow: none;
+}
+
+.form-label {
+    color: #333;
+    font-weight: 500;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.form-control:focus {
+    border-color: #e23636;
+    box-shadow: 0 0 0 0.2rem rgba(226, 54, 54, 0.25);
 }
 
 .toggle-password {
     cursor: pointer;
-    color: #007bff;
+    color: #e23636;
     font-size: 0.9rem;
-    float: right;
-    margin-top: -30px;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.btn-primary {
+    background-color: #e23636;
+    border-color: #e23636;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #c62828 !important;
+    border-color: #c62828 !important;
+    box-shadow: none !important;
 }
 
 .invalid-feedback {
-    display: block;
+    color: #e23636;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
+
+/* Custom styles for form groups */
+.mb-3 {
+    position: relative;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Ensure consistent styling for all form inputs */
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Style for the modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Animation for modal */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+/* Additional styles for admin login */
+.modal-body {
+    padding: 20px;
+}
+
+#loginForm {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    margin-top: 10px;
+}
+
+/* Enhance the look of the password toggle */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #e23636;
+}
+
+/* Style for form validation */
+.form-control.is-invalid {
+    border-color: #e23636;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23e23636'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23e23636' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid:focus {
+    border-color: #e23636;
+    box-shadow: 0 0 0 0.25rem rgba(226, 54, 54, 0.25);
 }

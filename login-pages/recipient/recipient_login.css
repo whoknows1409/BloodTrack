@@ -1,6 +1,7 @@
 body, html {
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
 }
 
 .header {
@@ -10,39 +11,160 @@ body, html {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 1000;
 }
 
 .nav .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e23636;
+    text-decoration: none;
 }
 
-.nav .login-btn {
-    background-color: #e23636;
-    color: white;
-    padding: 0.5rem 1rem;
+.modal-content {
+    border-radius: 10px;
     border: none;
-    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.modal-body {
-    padding: 0;
+.modal-header {
+    border-bottom: none;
+    padding: 20px 20px 0;
 }
 
-.toggle-password {
-    cursor: pointer;
-    color: #007bff;
-    font-size: 0.9rem;
-    float: right;
-    margin-top: -30px;
+.modal-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.btn-close:focus {
+    box-shadow: none;
+}
+
+.nav-tabs {
+    border-bottom: none;
+    margin-bottom: 15px;
+}
+
+.nav-tabs .nav-link {
+    color: #666;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
 }
 
 .nav-tabs .nav-link.active {
     background-color: #e23636;
     color: white;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background-color: #f8d7da;
+    color: #e23636;
+}
+
+.form-label {
+    color: #333;
+    font-weight: 500;
+}
+
+.form-control,
+.form-select {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #e23636;
+    box-shadow: 0 0 0 0.2rem rgba(226, 54, 54, 0.25);
+}
+
+.toggle-password {
+    cursor: pointer;
+    color: #e23636;
+    font-size: 0.9rem;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.btn-primary {
+    background-color: #e23636;
+    border-color: #e23636;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #c62828 !important;
+    border-color: #c62828 !important;
+    box-shadow: none !important;
 }
 
 .invalid-feedback {
-    display: block;
+    color: #e23636;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 8px 15px;
+    }
+}
+
+/* Custom styles for form groups */
+.mb-3 {
+    position: relative;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Ensure consistent styling for all form inputs */
+.form-control,
+.form-select,
+textarea.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+textarea.form-control {
+    min-height: 100px;
+}
+
+/* Style for the modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Animation for modal */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
 }
