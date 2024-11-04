@@ -166,6 +166,56 @@ const addBloodRequestHandler = async (req, res) => {
     }
 };
 
+// Fetch donation counts grouped by status for a specific donor
+const getDonationCounts = async (req, res) => {
+    const donorId = req.params.donorId;
+    try {
+        const query = `SELECT 
+            COUNT(*) AS total, 
+            SUM(CASE WHEN status = 'Approved' THEN 1 ELSE 0 END) AS approved, 
+            SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) AS pending, 
+            SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) AS rejected 
+            FROM donations WHERE donor_id = ?`;
+        
+        db.query(query, [donorId], (err, results) => {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ message: "Internal Server Error" });
+            }
+            res.json(results[0]); // Send counts as JSON response
+        });
+    } catch (error) {
+        console.error("Error fetching donation counts:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+  
+  // Fetch request counts grouped by status for a specific donor
+  const getRequestCounts = async (req, res) => {
+    const donorId = req.params.donorId;
+    try {
+        const query = `SELECT 
+            COUNT(*) AS total, 
+            SUM(CASE WHEN status = 'Approved' THEN 1 ELSE 0 END) AS approved, 
+            SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) AS pending, 
+            SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) AS rejected 
+            FROM requests WHERE donor_id = ?`;
+        
+        db.query(query, [donorId], (err, results) => {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ message: "Internal Server Error" });
+            }
+            res.json(results[0]); // Send counts as JSON response
+        });
+    } catch (error) {
+        console.error("Error fetching request counts:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+  
+
+
 // Export the controller functions wrapped in route handlers
 module.exports = {
     getDonationHistory: async (req, res) => {
@@ -191,6 +241,8 @@ module.exports = {
     },
 
     addDonationRequest: addDonationRequestHandler,
+    addBloodRequest: addBloodRequestHandler,
 
-    addBloodRequest: addBloodRequestHandler
+    getRequestCounts,
+    getDonationCounts
 };

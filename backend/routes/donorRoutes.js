@@ -8,4 +8,9 @@ router.get('/request-history/:donorId', donorController.getRequestHistory);
 router.post('/add-donation', donorController.addDonationRequest);
 router.post('/add-request', donorController.addBloodRequest);
 
+// New routes for donation and request counts
+router.get('/donation-counts/:donorId', donorController.getDonationCounts);
+router.get('/request-counts/:donorId', donorController.getRequestCounts);
+
+
 module.exports = router;

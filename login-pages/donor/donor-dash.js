@@ -200,6 +200,50 @@ function updateRequestHistoryTable(requests) {
   });
 }
 
+// Function to fetch donation counts and update the dashboard
+async function fetchDonationCounts() {
+  const donorId = sessionStorage.getItem('donorId');  // Retrieve donorId from session storage
+
+  if (!donorId) {
+      console.error('Donor ID is not set in session storage');
+      return;
+  }
+
+  try {
+      const response = await fetch(`http://localhost:3000/donor/donation-counts/${donorId}`);
+      const data = await response.json();
+
+      document.getElementById('totalDonations').textContent = data.total || 0;
+      document.getElementById('approvedDonations').textContent = data.approved || 0;
+      document.getElementById('pendingDonations').textContent = data.pending || 0;
+      document.getElementById('rejectedDonations').textContent = data.rejected || 0;
+  } catch (error) {
+      console.error('Error fetching donation counts:', error);
+  }
+}
+
+// Function to fetch request counts and update the dashboard
+async function fetchRequestCounts() {
+  const donorId = sessionStorage.getItem('donorId');  // Retrieve donorId from session storage
+
+  if (!donorId) {
+      console.error('Donor ID is not set in session storage');
+      return;
+  }
+
+  try {
+      const response = await fetch(`http://localhost:3000/donor/request-counts/${donorId}`);
+      const data = await response.json();
+
+      document.getElementById('totalRequests').textContent = data.total || 0;
+      document.getElementById('approvedRequests').textContent = data.approved || 0;
+      document.getElementById('pendingRequests').textContent = data.pending || 0;
+      document.getElementById('rejectedRequests').textContent = data.rejected || 0;
+  } catch (error) {
+      console.error('Error fetching request counts:', error);
+  }
+}
+
 async function refreshDonationHistory() {
   const donorId = sessionStorage.getItem('donorId');
   const donations = await fetchData(`http://localhost:3000/donor/donation-history/${donorId}`);
@@ -216,3 +260,8 @@ function logout() {
   sessionStorage.removeItem('donorId');
   window.location.href = 'donor_login.html';
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchDonationCounts();
+  fetchRequestCounts();
+});
