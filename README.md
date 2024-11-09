@@ -95,7 +95,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - GitHub: [whoknows1409](https://github.com/whoknows1409)
 - Project Link: [BloodTrack](https://github.com/whoknows1409/BloodTrack)
 
-## Team Members 👥
+## Team Members (QueryQuesters) 👥
 
 1. Omkar Bhoir
 2. Vansh Bhongle
