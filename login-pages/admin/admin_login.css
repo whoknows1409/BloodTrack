@@ -58,13 +58,12 @@ body, html {
 }
 
 .toggle-password {
+    position: absolute;
     cursor: pointer;
     color: #e23636;
     font-size: 0.9rem;
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 15px; /* Slightly adjusted */
+    top: 50%; /* Centered vertically */
 }
 
 .btn-primary {

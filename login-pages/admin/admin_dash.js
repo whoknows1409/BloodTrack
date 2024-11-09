@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = event.target;
             if (target.classList.contains('nav-link')) {
                 const linkText = target.textContent.trim();
-                
+
                 // Show/hide relevant sections based on what was clicked
                 if (linkText === 'Donation Requests') {
                     document.getElementById('donationRequestsTable').style.display = 'block';
@@ -63,20 +63,20 @@ function logout() {
 function openTab(tabId) {
     const tabs = document.getElementsByClassName('tab-content');
     const buttons = document.getElementsByClassName('tab-btn');
-    
+
     if (!tabs || !buttons) return;
 
     Array.from(tabs).forEach(tab => {
         if (tab) tab.style.display = 'none';
     });
-    
+
     Array.from(buttons).forEach(button => {
         if (button) button.classList.remove('active');
     });
 
     const selectedTab = document.getElementById(tabId);
     const selectedButton = document.querySelector(`button[onclick="openTab('${tabId}')"]`);
-    
+
     if (selectedTab) selectedTab.style.display = 'block';
     if (selectedButton) selectedButton.classList.add('active');
 }
@@ -119,7 +119,7 @@ async function loadDashboardData() {
 function updateBloodStockDisplay(stockData) {
     const stockList = document.querySelector('.blood-stock ul');
     const totalUnitsElement = document.querySelector('.total-units');
-    
+
     if (!stockList || !totalUnitsElement) {
         console.error('Blood stock elements not found');
         return;
@@ -155,7 +155,7 @@ function displayDonationRequests(requests) {
     const tableBody = document.querySelector('#donationRequestsTable tbody');
     if (!tableBody) return;
 
-    tableBody.innerHTML = requests.length ? '' : '<tr><td colspan="7">No pending donation requests</td></tr>';
+    tableBody.innerHTML = requests.length ? '' : '<tr><td colspan="7" style="text-align: center;">No pending donation requests</td></tr>';
 
     requests.forEach(request => {
         tableBody.innerHTML += `
@@ -168,12 +168,14 @@ function displayDonationRequests(requests) {
                 <td>${request.status}</td>
                 <td>
                     ${request.status === 'Pending' ? `
-                        <button onclick="handleDonationRequest(${request.donation_id}, 'Approved')">
-                            Approve
-                        </button>
-                        <button onclick="handleDonationRequest(${request.donation_id}, 'Rejected')">
-                            Reject
-                        </button>
+                        <button onclick="handleDonationRequest(${request.donation_id}, 'Approved')"
+                            style="background-color: #4CAF50; color: white; margin-right: 5px;">
+                        Approve
+                    </button>
+                    <button onclick="handleDonationRequest(${request.donation_id}, 'Rejected')"
+                            style="background-color: #f44336; color: white;">
+                        Reject
+                    </button>
                     ` : request.status}
                 </td>
             </tr>
@@ -197,7 +199,7 @@ async function handleDonationRequest(donationId, status) {
         // Refresh the data
         loadDonationRequests();
         loadDashboardData();
-        
+
         alert(`Donation request ${status.toLowerCase()} successfully`);
     } catch (error) {
         console.error('Error:', error);
@@ -244,7 +246,7 @@ async function loadBloodRequests() {
 function clearBloodRequestsTable() {
     const tableBody = document.querySelector('#bloodRequests tbody');
     if (tableBody) {
-        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No pending blood requests</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No pending blood requests</td></tr>';
     }
 }
 
@@ -264,8 +266,11 @@ function displayBloodRequests(requests) {
     const requestRows = requests.map(request => `
         <tr>
             <td>${request.recipient_id || 'N/A'}</td>
+            <td>${request.full_name || 'N/A'}</td>
             <td>${request.blood_type || 'N/A'} (${request.units || 0} units)</td>
+            <td>${request.address || 'N/A'}</td>
             <td>${request.purpose || 'N/A'}</td>
+                <td>${new Date(request.request_date).toLocaleDateString()}</td>
             <td>${request.status || 'N/A'}</td>
             <td>
                 ${request.status === 'Pending' ? `
@@ -289,7 +294,7 @@ function displayBloodRequests(requests) {
 async function handleBloodRequest(requestId, status) {
     try {
         // Different endpoints for approve and reject
-        const endpoint = status === 'Approved' 
+        const endpoint = status === 'Approved'
             ? `http://localhost:3000/admin/blood-requests/${requestId}/approve`
             : `http://localhost:3000/admin/blood-requests/${requestId}/reject`;
 
@@ -299,7 +304,7 @@ async function handleBloodRequest(requestId, status) {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 request_id: requestId,
                 comments: status === 'Rejected' ? 'Request rejected by admin' : ''
             })
@@ -312,7 +317,7 @@ async function handleBloodRequest(requestId, status) {
 
         const result = await response.json();
         alert(result.message);
-        
+
         // Refresh the data
         await Promise.all([
             loadBloodRequests(),
@@ -329,7 +334,7 @@ async function loadRequestHistory() {
     try {
         const response = await fetch('http://localhost:3000/admin/request-history');
         const { success, data } = await response.json();
-        
+
         if (success) {
             displayRequestHistory(data);
         } else {
@@ -357,7 +362,7 @@ function displayRequestHistory(history) {
                 <td>${item.blood_type}</td>
                 <td>${item.units} unit(s)</td>
                 <td>${item.status}</td>
-                <td>${item.comments || 'N/A'}</td>
+                <td style="display: none;">${item.comments || 'N/A'}</td>
             </tr>
         `;
     });
@@ -390,7 +395,7 @@ document.getElementById('update-form').addEventListener('submit', async (e) => {
         });
 
         if (!response.ok) throw new Error('Update failed');
-        
+
         const data = await response.json();
         alert('Blood stock updated successfully');
         closeUpdateModal();
@@ -428,7 +433,7 @@ async function viewRecipients() {
 function displayRecipients(recipients) {
     // Store the current dashboard content
     const dashboardContent = document.querySelector('.dashboard-main').innerHTML;
-    
+
     const content = document.createElement('div');
     content.innerHTML = `
         <div class="list-container">
@@ -478,7 +483,7 @@ function displayRecipients(recipients) {
 function displayDonors(donors) {
     // Store the current dashboard content
     const dashboardContent = document.querySelector('.dashboard-main').innerHTML;
-    
+
     const content = document.createElement('div');
     content.innerHTML = `
         <div class="list-container">
@@ -516,7 +521,7 @@ function displayDonors(donors) {
             </table>
         </div>
     `;
-    
+
     // Store the original dashboard content
     if (!window.dashboardState) {
         window.dashboardState = dashboardContent;

@@ -162,9 +162,10 @@ getBloodRequests: (req, res) => {
             r.recipient_id,
             rr.full_name,
             r.blood_type,
+            rr.address,
             r.units,
             r.status,
-            DATE_FORMAT(r.request_date, '%Y-%m-%d') as request_date,
+            r.request_date,
             r.purpose,
             r.comments
         FROM requests r

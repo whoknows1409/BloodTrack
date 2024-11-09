@@ -46,13 +46,9 @@ async function openTab(tabName) {
 
   const donorId = sessionStorage.getItem('donorId');
 
-  if (tabName === 'donationHistory') {
+  
     const donations = await fetchData(`http://localhost:3000/donor/donation-history/${donorId}`);
     if (donations) updateDonationHistoryTable(donations);
-  } else if (tabName === 'requestHistory') {
-    const requests = await fetchData(`http://localhost:3000/donor/request-history/${donorId}`);
-    if (requests) updateRequestHistoryTable(requests);
-  }
 }
 
 async function fetchData(url) {
@@ -154,53 +150,9 @@ async function submitDonation(event) {
   }
 }
 
-
-async function submitRequest(event) {
-  event.preventDefault();
-
-  const form = document.getElementById('bloodRequestForm');
-  const donorId = sessionStorage.getItem('donorId');
-  const requestBody = {
-    donorId: donorId,
-    requestData: {
-      blood_type: form.requestBloodType.value,
-      units: form.units.value,
-      purpose: form.purpose.value,
-      location: form.requestLocation.value,
-    }
-  };
-
-  console.log('Submitting request data:', requestBody); // Debug log
-
-  try {
-    const response = await fetch('http://localhost:3000/donor/add-request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      showSuccessMessage('Blood request submitted successfully!');
-      form.reset();
-      closeForm();
-      await refreshRequestHistory();
-    } else {
-      showErrorMessage(data.message || 'Failed to submit blood request');
-    }
-  } catch (error) {
-    console.error('Error submitting request:', error);
-    showErrorMessage('Failed to submit request. Please try again later.');
-  }
-}
-
 function updateDonationHistoryTable(donations) {
   const table = document.querySelector('#donationHistory table');
-  table.innerHTML = `<tr><th>Donation Date</th><th>Blood Type</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
+  table.innerHTML = `<tr><th>Donation Date</th><th>Blood Type</th><th>Location</th><th>Status</th><th>Response Date</th></tr>`;
   donations.forEach(donation => {
     const row = `<tr>
       <td>${donation.donation_date}</td>
@@ -208,24 +160,6 @@ function updateDonationHistoryTable(donations) {
       <td>${donation.location}</td>
       <td class="status ${donation.status.toLowerCase()}">${donation.status}</td>
       <td>${donation.response_date || '-'}</td>
-      <td>${donation.comments || '-'}</td>
-    </tr>`;
-    table.innerHTML += row;
-  });
-}
-
-function updateRequestHistoryTable(requests) {
-  const table = document.querySelector('#requestHistory table');
-  table.innerHTML = `<tr><th>Request Date</th><th>Blood Type & Units</th><th>Purpose</th><th>Location</th><th>Status</th><th>Response Date</th><th>Comments</th></tr>`;
-  requests.forEach(request => {
-    const row = `<tr>
-      <td>${request.request_date}</td>
-      <td>${request.blood_type} (${request.units} units)</td>
-      <td>${request.purpose}</td>
-      <td>${request.location}</td>
-      <td class="status ${request.status.toLowerCase()}">${request.status}</td>
-      <td>${request.response_date || '-'}</td>
-      <td>${request.comments || '-'}</td>
     </tr>`;
     table.innerHTML += row;
   });
@@ -253,38 +187,10 @@ async function fetchDonationCounts() {
   }
 }
 
-// Function to fetch request counts and update the dashboard
-async function fetchRequestCounts() {
-  const donorId = sessionStorage.getItem('donorId');  // Retrieve donorId from session storage
-
-  if (!donorId) {
-      console.error('Donor ID is not set in session storage');
-      return;
-  }
-
-  try {
-      const response = await fetch(`http://localhost:3000/donor/request-counts/${donorId}`);
-      const data = await response.json();
-
-      document.getElementById('totalRequests').textContent = data.total || 0;
-      document.getElementById('approvedRequests').textContent = data.approved || 0;
-      document.getElementById('pendingRequests').textContent = data.pending || 0;
-      document.getElementById('rejectedRequests').textContent = data.rejected || 0;
-  } catch (error) {
-      console.error('Error fetching request counts:', error);
-  }
-}
-
 async function refreshDonationHistory() {
   const donorId = sessionStorage.getItem('donorId');
   const donations = await fetchData(`http://localhost:3000/donor/donation-history/${donorId}`);
   if (donations) updateDonationHistoryTable(donations);
-}
-
-async function refreshRequestHistory() {
-  const donorId = sessionStorage.getItem('donorId');
-  const requests = await fetchData(`http://localhost:3000/donor/request-history/${donorId}`);
-  if (requests) updateRequestHistoryTable(requests);
 }
 
 function logout() {
@@ -294,5 +200,4 @@ function logout() {
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchDonationCounts();
-  fetchRequestCounts();
 });

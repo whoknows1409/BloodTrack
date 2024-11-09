@@ -41,35 +41,30 @@
         </div>
       </div>
 
-      <!-- Request Blood Card -->
+      <!-- Quick Actions Card -->
       <div class="card request-blood">
-        <h2>Request Blood</h2>
+        <h2>Quick Actions</h2>
         <button onclick="openRequestForm()">Request Blood</button>
-      </div>
-
-      <!-- Status Summary Card -->
-      <div class="card status-summary">
-        <h2>Status Summary</h2>
-        <p id="requests-summary"></p>
       </div>
     </div>
 
-    <!-- Request History Tab -->
+    <!-- Tabs for Request History -->
     <div class="tab-section">
       <button onclick="openTab('requestHistory')" class="tab-btn active">Request History</button>
     </div>
+
     <div id="requestHistory" class="tab-content" style="display:none;">
       <table>
-          <tr>
-            <th>Request Date</th>
-            <th>Blood Type & Units</th>
-            <th>Purpose</th>
-            <th>Location</th>
-            <th>Status</th>
-            <th>Response Date</th>
-            <th>Comments</th>
-          </tr>
-          <!-- Rows populated by recipient_dash.js -->
+        <tr>
+          <th>Request Date</th>
+          <th>Blood Type & Units</th>
+          <th>Purpose</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Response Date</th>
+          <th>Comments</th>
+        </tr>
+        <!-- Rows populated by recipient_dash.js -->
       </table>
     </div>
   </main>
@@ -110,6 +105,5 @@
       </form>
     </div>
   </div>
-
 </body>
 </html>
