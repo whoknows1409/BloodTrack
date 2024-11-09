@@ -83,16 +83,6 @@ The system uses the following tables:
 - **Authentication**: Session-based authentication
 - **UI Framework**: Bootstrap
 
-## Screenshots 📸
-
-Add screenshots of your application here:
-1. Login pages (Donor/Recipient/Admin)
-2. Registration pages
-3. Dashboard views
-4. Request submission forms
-5. History pages
-6. Admin management interfaces
-
 ## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
