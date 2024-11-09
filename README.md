@@ -102,4 +102,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 3. Soham Bhosale
 
 ---
-Made for better blood bank management
+Made by QueryQuesters for better blood bank management
