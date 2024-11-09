@@ -1,6 +1,6 @@
 # BloodTrack 🩸
 
-A comprehensive Blood Bank Management System that facilitates blood donation and request management. Built with Node.js, Express, and MySQL, BloodTrack provides separate interfaces for donors, recipients, and administrators.
+A comprehensive streamlined Blood Bank Management System that facilitates blood donation and request management. Built with Node.js, Express, and MySQL, BloodTrack provides separate interfaces for donors, recipients, and administrators.
 
 ## Features 🔥
 
@@ -101,8 +101,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Omkar Bhoir
 - Email: bhoiromkar1409@gmail.com
-- LinkedIn: (https://linkedin.com/in/)
-- Project Link: [https://github.com/whoknows1409/BloodTrack](https://github.com/whoknows1409/BloodTrack)
+- LinkedIn: [Omkar Bhoir](https://linkedin.com/in/omkar-bhoir-688887b297)
+- GitHub: [whoknows1409](https://github.com/whoknows1409)
+- Project Link: [BloodTrack](https://github.com/whoknows1409/BloodTrack)
 
 ## Team Members 👥
 
