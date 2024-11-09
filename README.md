@@ -91,7 +91,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Omkar Bhoir
 - Email: bhoiromkar1409@gmail.com
-- LinkedIn: [Omkar Bhoir](https://linkedin.com/in/omkar-bhoir-688887b297)
+- LinkedIn: [Omkar Bhoir](https://www.linkedin.com/in/omkar-bhoir-68887b297)
 - GitHub: [whoknows1409](https://github.com/whoknows1409)
 - Project Link: [BloodTrack](https://github.com/whoknows1409/BloodTrack)
 
